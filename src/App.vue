@@ -9,7 +9,7 @@
 
 <script>
 import StartScreen from './components/StartScreen.vue';
-import Introduction from './components/introduction.vue';
+import Introduction from '@/components/introduction.vue';
 
 export default {
   name: "app",
