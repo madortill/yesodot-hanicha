@@ -6,7 +6,8 @@
       </div>
       <div v-if="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
       <div  class="titles">{{ slidesInfo[curSlide].title }}</div>
-      <div class="text" v-html="formattedText"></div>
+      <div v-if="curSlide === '1'" class="text" v-html="formattedText"></div>
+      <div v-else-if="curSlide === '2'">{{ slidesInfo[curSlide].text }}</div>
       <div v-if="showImage && curSlide === '1'" class="grandma"></div>
       <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
       <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
@@ -29,7 +30,7 @@
           },
           '2' : {
               title: 'עקרונות החניכה',
-              text: ''
+              text: this.array2Slide
           },
           '3' : {
               title: '',
@@ -42,6 +43,7 @@
        },
        keyWords: ['התפתחות', 'קשר מתמשך', 'מסייע בהנחייתו'],
        showImage: false,
+       array2Slide: ['תחומי החניכה','מוקד הלמידה - ביצועי הנחנך','ביצוע מלווה בעיבוד משותף','קשר בריא ומתמשך בין החונך לנחנך']
       }
     },
     computed: {
@@ -82,9 +84,11 @@
     },
     methods: {
       keywordHovered(event) {
-        setTimeout( () => {
+        if (event.target.classList.contains('keyword') && !this.showImage) {
+          setTimeout( () => {
             this.showImage = true;
         }, 3000);
+        }
         if (event.target.classList.contains('keyword')) {
           event.target.style.fontSize = '2.4rem';  // Adjust the size as desired
           event.target.style.fontWeight = 'bold';  // Add other styles if needed
@@ -95,6 +99,9 @@
         let slideNum = Number(this.curSlide);
         slideNum++;
         this.curSlide = String(slideNum);
+        if (this.showImage) {
+          this.showImage = false;
+        }
       },
       lastTitle() {
         let slideNum = Number(this.curSlide);
@@ -270,18 +277,31 @@
       border-radius: 20vw;
       animation: fadeout 5s forwards;
   }
-  
+ 
+
 .grandma {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10vh;
     background-image: url(../assets/media/introduction/grandma.png);
     width: 44vmax;
     height: 20vmax;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    animation: pulse1 2s forwards;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10vh;
 }
 
+@keyframes pulse1 {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.2);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
   </style>
   
