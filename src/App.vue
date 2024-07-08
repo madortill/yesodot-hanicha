@@ -1,7 +1,7 @@
 <template>
     <div id="app">
       <!-- <img id="icon-bahadim" src="src/assets/media/general/bahadim-icon.png" alt="bahadim"/> -->
-      <img id="icon-til" src="src/assets/media/general/til.png" alt="bahadim"/>
+      <!-- <img id="icon-til" src="src/assets/media/general/til.png" alt="bahadim"/> -->
       <start-screen v-if="page===1" @switch-screen="switchPage"></start-screen>
       <introduction v-if="page===2" @switch-screen="switchPage"></introduction>
     </div>
