@@ -3,14 +3,14 @@
       <!-- <img id="icon-bahadim" src="src/assets/media/general/bahadim-icon.png" alt="bahadim"/> -->
       <!-- <img id="icon-til" src="src/assets/media/general/til.png" alt="bahadim"/> -->
       <start-screen v-if="page === 1" @switch-screen="switchPage"></start-screen>
-      <introduction v-if="page === 2" @switch-screen="switchPage"></introduction>
+      <!-- <introduction v-if="page === 2" @switch-screen="switchPage"></introduction> -->
   </div>
 </template>
 
 
 <script>
 import StartScreen from './components/StartScreen.vue';
-import Introduction from './components/Introduction.vue';
+// import Introduction from './components/Introduction.vue';
 
 export default {
     name: 'app',
@@ -21,7 +21,7 @@ export default {
     },
     components: {
         StartScreen,
-        Introduction,
+        // Introduction,
     },
     methods: {
         switchPage(page) {
