@@ -2,8 +2,12 @@
   <div id="app">
       <!-- <img id="icon-bahadim" src="src/assets/media/general/bahadim-icon.png" alt="bahadim"/> -->
       <!-- <img id="icon-til" src="src/assets/media/general/til.png" alt="bahadim"/> -->
-      <start-screen v-if="page === 1" @switch-screen="switchPage"></start-screen>
-      <introduction v-if="page === 2" @switch-screen="switchPage"></introduction>
+      <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
+      <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
+      <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen"></triangle>
+      <div v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
+      <div v-show="page === 5" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
+      <div v-show="page === 6" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
    
   </div>
 </template>
@@ -12,21 +16,27 @@
 <script>
 import StartScreen from './components/StartScreen.vue';
 import Introduction from '@/components/Introduction.vue';
+import Triangle from './components/Triangle.vue'
 
 export default {
     name: 'app',
     data() {
         return {
             page: 1,
+            whereBeen: [2]
         };
     },
     components: {
         StartScreen,
-        Introduction
+        Introduction,
+        Triangle
     },
     methods: {
         switchPage(page) {
             this.page = page;
+            if (!this.whereBeen.includes(page)) {
+            this.whereBeen.push(page);
+        }
         },
     },
 };

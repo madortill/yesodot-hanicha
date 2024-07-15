@@ -2,39 +2,44 @@
     <div id="navbar">
         <div class="container">
             <nav>
-                <ul @click="chosenTitle">
-                    <li :class="{ active: titleIndex === 0 }">מבוא</li>
-                    <li :class="{ active: titleIndex === 1 }">משולש החניכה</li>
-                    <li :class="{ active: titleIndex === 2 }">אירוע החניכה</li>
-                    <li :class="{ active: titleIndex === 3 }">נחנך</li>
-                    <li :class="{ active: titleIndex === 4 }">חונך</li>
-                    <li :class="{ active: titleIndex === 5 }">סיכום</li>
+                <ul>
+                    <li 
+                        v-for="(title, index) in titles" 
+                        :key="index"
+                        :class="{ active: titleIndex === index }"
+                        @click="chosenTitle(index)"
+                    >
+                        {{ title }}
+                    </li>
                 </ul>
             </nav>
         </div>
     </div>
 </template>
-  
+
 <script>
 export default {
     name: 'navbar',
     props: ["titleIndex"],
     data() {
         return {
-
+            titles: [
+                "מבוא",
+                "משולש החניכה",
+                "אירוע החניכה",
+                "נחנך",
+                "חונך",
+                "סיכום"
+            ]
         };
     },
     methods: {
-        chosenTitle(event) {
-            if (event.target.tagName === "li") {
-                this.titleIndex = parseInt(event.target.id.slice(-1)) - 1;
-                this.$emit('chosen-page', this.titleIndex);
-            }
+        chosenTitle(index) {
+            this.$emit('switch-page', index+2);
         },
     },
 };
 </script>
-  
 <style scoped>
 .container {
     height: 10vh;
@@ -47,18 +52,16 @@ export default {
     margin-top: 2%;
 }
 
-
 @media (max-width: 1024px) {
     .container {
-    height: 10vh;
-    width: 75vw;
-    margin-top: 2%;
-    position: relative;
-    left: 30%;
-    transform: translateX(-50%);
- }
+        height: 10vh;
+        width: 75vw;
+        margin-top: 2%;
+        position: relative;
+        left: 30%;
+        transform: translateX(-50%);
+    }
 }
-
 
 * {
     margin: 0;
@@ -82,15 +85,13 @@ nav ul li {
     color: #777;
     position: relative;
     z-index: 2;
-    cursor: default;
+    cursor: pointer;
     transition: color 0.5s;
 }
 
 nav ul li.active {
     background: #023E8A;
-    cursor: pointer;
     border-radius: 30px;
     color: white;
 }
 </style>
-  

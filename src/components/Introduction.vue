@@ -1,13 +1,14 @@
 <template>
   <div id="introduction">
-    <navbar :titleIndex="0"></navbar>
+    <navbar :titleIndex="0" @switch-page="switchPage"></navbar>
+
+    <div class="titles">{{ slidesInfo[curSlide].title }}</div>
 
     <div v-if="curSlide === '1' && !didVisit" id="clickMe" @click="showInfo">
       <p>לחצו עליי</p>
     </div>
 
     <div v-if="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
-    <div class="titles">{{ slidesInfo[curSlide].title }}</div>
     <div v-if="curSlide === '1'" class="text" v-html="formattedText"></div>
     <div v-if="showImage && curSlide === '1' && !didVisit" id="grandma"></div>
     <div v-if="didVisit && curSlide === '1'" id="grandma" class="no-animation"></div>
@@ -19,9 +20,10 @@
         {{ item }}
       </div>
     </div>
+
     <div v-else-if="curSlide === '3'" class="flip-card">
       <div class="flip-card-inner">
-        <div class="flip-card-front">
+        <div>
           <img 
             src="../assets/media/introduction/target-front.png" 
             alt="target-front"
@@ -38,8 +40,20 @@
       </div>
     </div>
 
+    <div v-show="curSlide === '4'">
+      <div
+        v-for="(value, key) in slide3Info"
+        :key="key"
+        :id="key"
+        :class="{ 'container': key !== 'subtitle' }"
+        @click="key !== 'subtitle' ? checkIfCorrect(key) : null"
+        v-html="value"
+      ></div>
+  </div>
+
     <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+    <div id="yalla-next" v-if="curSlide === '4' && didClick" @click="nextPage"></div>
   </div>
 </template>
 
@@ -47,6 +61,7 @@
 import Navbar from '@/components/Navbar.vue';
 export default {
   name: "introduction",
+  props: ['whereBeen'],
   data() {
     return {
       curSlide: '1',
@@ -54,7 +69,13 @@ export default {
       showImage: false,
       array2Slide: ['תחומי החניכה', 'מוקד הלמידה - ביצועי הנחנך', 'ביצוע מלווה בעיבוד משותף', 'קשר בריא ומתמשך בין החונך לנחנך'],
       circleColors: ['#48CAE4', '#90E0EF', '#ADE8F4', '#CAF0F8'],
+      slide3Info: {
+        'subtitle' : 'לחצו על אחת האופציות וגלו מה התשובה הנכונה',
+        'first' : '<div style="font-weight: bold; font-size: 2.4rem;">כן!</div> תהליך חניכה טוב הוא תהליך חניכה שמסתיים!<br><br> הסוף תלוי במידת<br> העצמאות שאליה הגיע הנחנך בביצועיו<br>',
+        'second' : '<div style="font-weight: bold; font-size: 2.4rem;">לא!</div> תהליך חניכה אף פעם לא מסתיים!<br><br> תמיד יש לאן לשאוף ולהשתפר, לכן התליך הוא בלתי נגמר'
+      },
       didVisit: false,
+      didClick: false,
       slidesInfo: {
         '1': {
           title: 'מהי חניכה?',
@@ -70,7 +91,7 @@ export default {
         },
         '4': {
           title: 'האם תהליך החניכה מסתיים בכלל מתישהו?',
-          text: ''
+          text: {}
         }
       }
     }
@@ -78,6 +99,7 @@ export default {
   created() {
     // Assign array2Slide to text for slide 2 after array2Slide is defined
     this.slidesInfo['2'].text = this.array2Slide;
+    this.slidesInfo['3'].text = this.slide3Info;
   },
   computed: {
     formattedText() {
@@ -105,6 +127,11 @@ export default {
     document.addEventListener('mouseover', this.keywordHovered);
   },
   methods: {
+    switchPage(index) {
+        if (this.whereBeen.includes(index)) {
+          this.$emit('switch-screen', index);
+        }
+      },
   keywordHovered(event) {
     if (event.target.classList.contains('keyword') && !this.showImage) {
       setTimeout(() => {
@@ -152,8 +179,23 @@ export default {
       element.style.fontWeight = 'bold';
       element.style.color = '#023E8A';
     });
+  }, 
+  checkIfCorrect(key) {
+    this.didClick = true;
+    document.getElementById("first").classList.add("clicked");
+    document.getElementById("second").classList.add("clicked");
+    if (key === "first") {
+      document.getElementById("first").classList.add("correct");
+      document.getElementById("second").classList.remove("incorrect");
+    } else {
+      document.getElementById("first").classList.remove("correct");
+      document.getElementById("second").classList.add("incorrect");
+    }
+  },
+  nextPage() {
+    this.$emit("switch-screen", 3);
   }
-}
+  }
 }
 </script>
 
@@ -182,7 +224,7 @@ export default {
   width: 60vw;
 }
 .keyword {
-  transition: font-size 0.3s ease, color 0.3s ease;
+  transition: font-size 1s, color 1s;
 }
 
 .keyword:hover,
@@ -413,12 +455,83 @@ export default {
   backface-visibility: hidden;
 }
 
-.flip-card-front {
- 
-}
-
 .flip-card-back {
   transform: rotateY(180deg);
+  position: relative;
+  top: 0.65vh;
+}
+
+#subtitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 16rem;
+  font-size: 1.4rem;
+  color: rgb(241, 108, 89);
+}
+
+.container {
+  font-size: 1.8rem;
+  width: 20vw;
+  height: 35vh;
+  border: 2.5px solid #023E8A;
+  color: #023E8A;
+  border-radius: 5vmax;
+  align-content: center;
+  cursor: pointer;
+  padding: 0.9vw;
+  animation: pulse-smaller 2s infinite;
+}
+
+@keyframes pulse-smaller {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#first {
+  position: absolute;
+  top: 37vh;
+  right: 26vw;
+}
+
+#second {
+  position: absolute;
+  top: 37vh;
+  left: 26vw;
+}
+
+.correct {
+  background-color: rgba(111, 222, 111, 0.543);
+  border: none;
+}
+
+.incorrect {
+  background-color: rgba(241, 109, 89, 0.824);
+  border: none;
+}
+
+.clicked {
+  animation: none !important;
+}
+
+#yalla-next {
+  width: 9vmax;
+  height: 10vmax;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  background-image: url(../assets/media/general/yalla-next.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  animation: pulse-smaller 1.25s infinite;
 }
 
 </style>
