@@ -54,6 +54,7 @@
     <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
     <div id="yalla-next" v-if="curSlide === '4' && didClick" @click="nextPage"></div>
+    <div class="message" v-if="curSlide === '4' && didClick"> {{ message }} </div>
   </div>
 </template>
 
@@ -76,6 +77,7 @@ export default {
       },
       didVisit: false,
       didClick: false,
+      message: null,
       slidesInfo: {
         '1': {
           title: 'מהי חניכה?',
@@ -90,7 +92,7 @@ export default {
           text: ''
         },
         '4': {
-          title: 'האם תהליך החניכה מסתיים בכלל מתישהו?',
+          title: 'האם לתהליך החניכה יש נקודת סיום?',
           text: {}
         }
       }
@@ -187,11 +189,16 @@ export default {
     if (key === "first") {
       document.getElementById("first").classList.add("correct");
       document.getElementById("second").classList.remove("incorrect");
+      this.message = "כל הכבוד!"
+      document.getElementById("first").removeEventListener("click", this.checkIfCorrect);
+      document.getElementById("second").removeEventListener("click", this.checkIfCorrect);
     } else {
       document.getElementById("first").classList.remove("correct");
       document.getElementById("second").classList.add("incorrect");
+      this.message = "לא נורא, נסה שוב"
     }
   },
+  
   nextPage() {
     this.$emit("switch-screen", 3);
   }
@@ -394,8 +401,8 @@ export default {
 
 #grandma {
   background-image: url(../assets/media/introduction/grandma.png);
-  width: 35vmax;
-  height: 13vmax;
+  width: 33vmax;
+  height: 14vmax;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   animation: pulse1 2s forwards;
@@ -532,6 +539,15 @@ export default {
   background-repeat: no-repeat;
   cursor: pointer;
   animation: pulse-smaller 1.25s infinite;
+}
+
+.message {
+  position: absolute;
+  font-size: 3rem;
+  font-family: "Heebo-bold";
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 13vh;
 }
 
 </style>
