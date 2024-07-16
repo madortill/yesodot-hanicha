@@ -5,7 +5,7 @@
       <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
       <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
       <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen"></triangle>
-      <div v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
+      <event v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></event>
       <div v-show="page === 5" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
       <div v-show="page === 6" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
    
@@ -17,6 +17,7 @@
 import StartScreen from './components/StartScreen.vue';
 import Introduction from '@/components/Introduction.vue';
 import Triangle from './components/Triangle.vue'
+import Event from './components/Event.vue'
 
 export default {
     name: 'app',
@@ -29,7 +30,8 @@ export default {
     components: {
         StartScreen,
         Introduction,
-        Triangle
+        Triangle,
+        Event
     },
     methods: {
         switchPage(page) {

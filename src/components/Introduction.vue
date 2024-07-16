@@ -54,7 +54,7 @@
     <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
     <div id="yalla-next" v-if="curSlide === '4' && didClick" @click="nextPage"></div>
-    <div class="message" v-if="curSlide === '4' && didClick"> {{ message }} </div>
+    <div class="message" v-if="curSlide === '4'"> {{ message }} </div>
   </div>
 </template>
 
@@ -176,23 +176,23 @@ export default {
     document.removeEventListener('mouseover', this.keywordHovered);
     let keywordElements = document.querySelectorAll('.keyword');
     keywordElements.forEach((element) => { 
-      console.log(element);
       element.style.fontSize = '2.4rem';
       element.style.fontWeight = 'bold';
       element.style.color = '#023E8A';
     });
   }, 
   checkIfCorrect(key) {
-    this.didClick = true;
     document.getElementById("first").classList.add("clicked");
     document.getElementById("second").classList.add("clicked");
     if (key === "first") {
+      this.didClick = true;
       document.getElementById("first").classList.add("correct");
       document.getElementById("second").classList.remove("incorrect");
       this.message = "כל הכבוד!"
       document.getElementById("first").removeEventListener("click", this.checkIfCorrect);
       document.getElementById("second").removeEventListener("click", this.checkIfCorrect);
     } else {
+      this.didClick = false;
       document.getElementById("first").classList.remove("correct");
       document.getElementById("second").classList.add("incorrect");
       this.message = "לא נורא, נסה שוב"
@@ -548,6 +548,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   bottom: 13vh;
+  color: #023E8A;
 }
 
 </style>
