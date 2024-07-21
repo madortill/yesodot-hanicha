@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-      <img id="icon-bahadim" src="src/assets/media/general/mifkada-logo.png" alt="bahadim"/>
-      <img id="icon-til" src="src/assets/media/general/madortill.png" alt="till"/>
+      <img id="icon-bahadim" src="@/assets/media/general/mifkada-logo.png" alt="bahadim"/>
+      <img id="icon-til" src="@/assets/media/general/madortill.png" alt="till"/>
       <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
       <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
       <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen"></triangle>
