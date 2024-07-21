@@ -7,12 +7,9 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   resolve: {
-    // alias: {
-    //   '@': fileURLToPath(new URL('./src', import.meta.url))
-    // }
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+       '@': fileURLToPath(new URL('./src', import.meta.url))
+     }
   },
   base: process.env.NODE_ENV === "production" ? "/yesodot-hanicha/" : "/",
 })
