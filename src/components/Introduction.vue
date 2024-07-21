@@ -4,12 +4,12 @@
 
     <div class="titles">{{ slidesInfo[curSlide].title }}</div>
 
-    <div v-show="curSlide === '1' && !didClick1" id="clickMe" @click="showInfo">
-        <p>לחצו עליי</p>
+    <div v-if="curSlide === '1' && !didClick1" id="clickMe" @click="showInfo">
+      <p>לחצו עליי</p>
     </div>
 
-    <div v-show="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
-    <div v-show="curSlide === '1'" class="text" v-html="formattedText"></div>
+    <div v-if="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
+    <div v-if="curSlide === '1'" class="text" v-html="formattedText"></div>
     <div v-if="showImage && curSlide === '1' && !didVisit" id="grandma"></div>
     <div v-if="didVisit && curSlide === '1'" id="grandma" class="no-animation"></div>
 
@@ -49,7 +49,7 @@
 
     <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
-    <div id="yalla-next" v-if="curSlide === '4' && didClick" @click="nextPage"></div>
+    <div id="yalla-next" v-if="curSlide === '4' && didClick2" @click="nextPage"></div>
     <div class="message" v-if="curSlide === '4'"> {{ message }} </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ export default {
         },
         '2': {
           title: 'מה ההבדל בין חניכה ללמידה?',
-          text: ''  
+          text: []  
         },
         '3': {
           title: '',
@@ -156,19 +156,11 @@ export default {
   },
   showInfo() {
     setTimeout( () => {
-      this.didClick1 = true;
-    }, 4000);
+      this.didClick1=true;
+    }, 3500);
     document.getElementById("clickMe").classList.add("clicked");
     document.getElementById("disappearingMsg").classList.add("showMsg");
     document.getElementById("clickMe").classList.add("disappear");
-  },
-  circleHovered(index) {
-    const circles = document.querySelectorAll('.circle');
-    circles[index].classList.add('circle-hovered');
-  },
-  circleLeft(index) {
-    const circles = document.querySelectorAll('.circle');
-    circles[index].classList.remove('circle-hovered');
   },
   makeHighlight() {
     document.removeEventListener('mouseover', this.keywordHovered);
@@ -352,38 +344,6 @@ export default {
     opacity: 0;
   }
 }
-
-.text1 {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 20rem;
-  font-size: 2rem;
-  color: #03045E;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-
-.circle {
-  display: flex;
-  margin-left: -1.5vw;
-  align-content: center;
-  border-radius: 100%;  /* Makes the element circular */
-  width: 14vw;
-  height: 14vw;
-  padding: 20px;  /* Adjust padding as needed */
-  display: inline-block;  /* Ensures the element takes the shape of a circle */
-  text-align: center;  /* Centers text inside the circle */
-  transition: transform 0.3s ease, border-color 0.3s ease;  /* Smooth transition */
-}
-
-.circle-hovered {
-  transform: scale(1.3);  /* Scale up on hover */
-  cursor: pointer;  /* Change cursor on hover */
-  align-items: center;
-}
-
 
 .showMsg {
   display: block !important;
