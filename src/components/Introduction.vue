@@ -46,7 +46,7 @@
         :key="key"
         :id="key"
         :class="{ 'container': key !== 'subtitle' }"
-        @click="key !== 'subtitle' ? checkIfCorrect(key) : null"
+        @click="key !== 'subtitle' && !didClick ? checkIfCorrect(key) : null"
         v-html="value"
       ></div>
   </div>

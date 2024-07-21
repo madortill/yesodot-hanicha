@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-      <!-- <img id="icon-bahadim" src="src/assets/media/general/bahadim-icon.png" alt="bahadim"/> -->
-      <!-- <img id="icon-til" src="src/assets/media/general/til.png" alt="bahadim"/> -->
+      <img id="icon-bahadim" src="src/assets/media/general/mifkada-logo.png" alt="bahadim"/>
+      <img id="icon-til" src="src/assets/media/general/madortill.png" alt="till"/>
       <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
       <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
       <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen"></triangle>
@@ -65,23 +65,26 @@ export default {
     overflow: hidden;
 }
 
-#icon-til {
-    max-width: 125px;
-    right: 0;
-    bottom: 0;
+
+#icon-bahadim {
+    max-width: 100px;
+    left: 0;
+    top: 0;
     position: absolute;
     margin-top: 1%;
     margin-left: 1%;
     z-index: 3;
 }
 
-#icon-bahadim {
-    max-width: 125px;
-    left: 0;
-    top: 0;
+#icon-til {
+    /* min-width: 20px; */
+    max-height: 10%;
+    max-width: 90px;
     position: absolute;
-    margin-top: 1%;
-    margin-left: 1%;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 1%;
+    margin-right: 1%;
     z-index: 3;
 }
 </style>
