@@ -4,21 +4,17 @@
 
     <div class="titles">{{ slidesInfo[curSlide].title }}</div>
 
-    <div v-if="curSlide === '1' && !didVisit" id="clickMe" @click="showInfo">
-      <p>לחצו עליי</p>
+    <div v-show="curSlide === '1' && !didClick1" id="clickMe" @click="showInfo">
+        <p>לחצו עליי</p>
     </div>
 
-    <div v-if="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
-    <div v-if="curSlide === '1'" class="text" v-html="formattedText"></div>
+    <div v-show="curSlide === '1'" id="disappearingMsg"> עברו על הטקסט עם העכבר ותראו מה יקרה </div>
+    <div v-show="curSlide === '1'" class="text" v-html="formattedText"></div>
     <div v-if="showImage && curSlide === '1' && !didVisit" id="grandma"></div>
     <div v-if="didVisit && curSlide === '1'" id="grandma" class="no-animation"></div>
 
-    <div v-else-if="curSlide === '2'" class="text1">
-      <div v-for="(item, index) in slidesInfo[curSlide].text" :key="index" class="circle"
-           @mouseover="circleHovered(index)" @mouseleave="circleLeft(index)"
-           :style="{ backgroundColor: circleColors[index] }">
-        {{ item }}
-      </div>
+    <div v-else-if="curSlide === '2'">
+      <!-- <removed-circles></removed-circles> -->
     </div>
 
     <div v-else-if="curSlide === '3'" class="flip-card">
@@ -46,7 +42,7 @@
         :key="key"
         :id="key"
         :class="{ 'container': key !== 'subtitle' }"
-        @click="key !== 'subtitle' && !didClick ? checkIfCorrect(key) : null"
+        @click="key !== 'subtitle' && !didClick2 ? checkIfCorrect(key) : null"
         v-html="value"
       ></div>
   </div>
@@ -60,6 +56,7 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import RemovedCircles from './RemovedCircles.vue';
 export default {
   name: "introduction",
   props: ['whereBeen'],
@@ -68,15 +65,14 @@ export default {
       curSlide: '1',
       keyWords: ['למידה', 'קשר מתמשך', 'מסייע ומנחה'],
       showImage: false,
-      array2Slide: ['תחומי החניכה', 'מוקד הלמידה - ביצועי הנחנך', 'ביצוע מלווה בעיבוד משותף', 'קשר בריא ומתמשך בין החונך לנחנך'],
-      circleColors: ['#48CAE4', '#90E0EF', '#ADE8F4', '#CAF0F8'],
       slide3Info: {
         'subtitle' : 'לחצו על אחת האופציות וגלו מה התשובה הנכונה',
         'first' : '<div style="font-weight: bold; font-size: 2.4rem;">כן!</div> תהליך חניכה טוב הוא תהליך חניכה שמסתיים!<br><br> הסוף תלוי במידת<br> העצמאות שאליה הגיע הנחנך בביצועיו<br>',
         'second' : '<div style="font-weight: bold; font-size: 2.4rem;">לא!</div> תהליך חניכה אף פעם לא מסתיים!<br><br> תמיד יש לאן לשאוף ולהשתפר, לכן התליך הוא בלתי נגמר'
       },
       didVisit: false,
-      didClick: false,
+      didClick1: false,
+      didClick2: false,
       message: null,
       slidesInfo: {
         '1': {
@@ -84,8 +80,8 @@ export default {
           text: 'תהליך למידה שמתבסס על קשר מתמשך, בו אדם מנוסה מסייע ומנחה אדם בעל ידע מצומצם יותר.'
         },
         '2': {
-          title: 'עקרונות החניכה',
-          text: []  
+          title: 'מה ההבדל בין חניכה ללמידה?',
+          text: ''  
         },
         '3': {
           title: '',
@@ -99,8 +95,6 @@ export default {
     }
   },
   created() {
-    // Assign array2Slide to text for slide 2 after array2Slide is defined
-    this.slidesInfo['2'].text = this.array2Slide;
     this.slidesInfo['3'].text = this.slide3Info;
   },
   computed: {
@@ -123,7 +117,8 @@ export default {
     }
   },
   components: {
-    Navbar
+    Navbar,
+    RemovedCircles
   },
   mounted() {
     document.addEventListener('mouseover', this.keywordHovered);
@@ -160,6 +155,9 @@ export default {
     this.showImage = this.didVisit;
   },
   showInfo() {
+    setTimeout( () => {
+      this.didClick1 = true;
+    }, 4000);
     document.getElementById("clickMe").classList.add("clicked");
     document.getElementById("disappearingMsg").classList.add("showMsg");
     document.getElementById("clickMe").classList.add("disappear");
@@ -185,7 +183,7 @@ export default {
     document.getElementById("first").classList.add("clicked");
     document.getElementById("second").classList.add("clicked");
     if (key === "first") {
-      this.didClick = true;
+      this.didClick2 = true;
       document.getElementById("first").classList.add("correct");
       document.getElementById("second").classList.remove("incorrect");
       this.message = "כל הכבוד!"
