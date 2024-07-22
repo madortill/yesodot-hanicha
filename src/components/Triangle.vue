@@ -4,10 +4,10 @@
       <div class="title">לתהליך החניכה ישנם שלושה גורמים משפיעים</div>
       <img v-for="(item, index) in array" 
       :key="index" 
-      :class="item" 
+      :class="[item , item === wherePulse ? 'pulse' : 'item']"
       :src="imageSrc(item)"
       :alt="item"
-      @click="item === 'subject1' ? nextPage() : null"
+      @click="item === wherePulse ? nextPage() : null"
       />
     </div>
   </template>
@@ -17,14 +17,14 @@
   
   export default {
     name: "triangle",  
-    props: ['whereBeen'],
+    props: ['whereBeen', 'wherePulse'],
     components: {
       Navbar
     },
     emits: ['switch-screen', 'switch-page'],  
     data() {
       return {
-        array: ['triangle', 'subject1', 'subject2', 'subject3'],
+        array: ['triangle', 'event', 'educated', 'educator'],
       };
     },
     methods: {
@@ -61,11 +61,14 @@
     color: #0077B6;
     width: 100vw;
   }
-  .subject1 {
+  .event {
     position: absolute;
     top: 35vh;
-    cursor: pointer;
-    animation: pulse-smaller 1.5s infinite;
+    cursor: pointer; 
+}
+
+.pulse {
+  animation: pulse-smaller 1.5s infinite;
 }
 
 @keyframes pulse-smaller {
@@ -80,12 +83,12 @@
   }
 }
 
-  .subject2 {
+  .educated {
     position: absolute;
     bottom: 20vh;
     right: 35vw;
   }
-  .subject3 {
+  .educator {
     position: absolute;
     bottom: 20vh;
     left: 35vw;

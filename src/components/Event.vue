@@ -2,18 +2,20 @@
     <div id="event">
       <navbar :titleIndex="2" @switch-page="switchPage"></navbar>
       <div class="title">אירוע החניכה</div>
+      <!-- <triangle></triangle> -->
 
     </div>
   </template>
   
   <script>
    import Navbar from './Navbar.vue';
-  
+   import Triangle from './Triangle.vue'
   export default {
     name: "event",  
     props: ['whereBeen'],
     components: {
-      Navbar
+      Navbar,
+      Triangle
     },
     emits: ['switch-screen', 'switch-page'],  
     data() {

@@ -4,7 +4,7 @@
       <img id="icon-til" src="@/assets/media/general/madortill.png" alt="till"/>
       <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
       <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
-      <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen"></triangle>
+      <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
       <event v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></event>
       <div v-show="page === 5" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
       <div v-show="page === 6" @switch-screen="switchPage" :whereBeen="whereBeen"></div>
@@ -24,7 +24,8 @@ export default {
     data() {
         return {
             page: 1,
-            whereBeen: [2]
+            whereBeen: [2],
+            wherePulse: 'event',
         };
     },
     components: {
@@ -38,6 +39,14 @@ export default {
             this.page = page;
             if (!this.whereBeen.includes(page)) {
             this.whereBeen.push(page);
+
+            if (this.whereBeen.includes(5)) {
+                 this.wherePulse= 'educated';
+            } 
+
+            if (this.whereBeen.includes(6)) {
+                this.wherePulse= 'educator';
+            }
         }
         },
     },
