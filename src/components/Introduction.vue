@@ -13,30 +13,18 @@
     <div v-if="showImage && curSlide === '1' && !didVisit" id="grandma"></div>
     <div v-if="didVisit && curSlide === '1'" id="grandma" class="no-animation"></div>
 
-    <div v-else-if="curSlide === '2'">
-      <!-- <removed-circles></removed-circles> -->
+    <!-- <removed-circles></removed-circles> -->
+    
+    <div v-else-if="curSlide === '2'" >
+      <flip-card 
+        :folder="folderName"
+        :frontName="frontName"
+        :backName="backName"
+        >
+      </flip-card>
     </div>
 
-    <div v-else-if="curSlide === '3'" class="flip-card">
-      <div class="flip-card-inner">
-        <div>
-          <img 
-            src="../assets/media/introduction/target-front.png" 
-            alt="target-front"
-            class="target-front"
-          />
-        </div>
-        <div class="flip-card-back">
-          <img 
-            src="../assets/media/introduction/target-back.png" 
-            alt="target-back"
-            class="target-front"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div v-show="curSlide === '4'">
+    <div v-show="curSlide === '3'">
       <div
         v-for="(value, key) in slide3Info"
         :key="key"
@@ -47,22 +35,26 @@
       ></div>
   </div>
 
-    <button v-if="curSlide !== '4'" class="button next" @click="nextTitle">המשך</button>
+    <button v-if="curSlide !== '3'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
-    <div id="yalla-next" v-if="curSlide === '4' && didClick2" @click="nextPage"></div>
-    <div class="message" v-if="curSlide === '4'"> {{ message }} </div>
+    <div id="yalla-next" v-if="curSlide === '3' && didClick2" @click="nextPage"></div>
+    <div class="message" v-if="curSlide === '3'"> {{ message }} </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
 import RemovedCircles from './RemovedCircles.vue';
+import FlipCard from './FlipCard.vue';
 export default {
   name: "introduction",
   props: ['whereBeen'],
   data() {
     return {
       curSlide: '1',
+      frontName: "target-front",
+      backName: "target-back",
+      folderName: "introduction",
       keyWords: ['למידה', 'קשר מתמשך', 'מסייע ומנחה'],
       showImage: false,
       slide3Info: {
@@ -80,14 +72,10 @@ export default {
           text: 'תהליך למידה שמתבסס על קשר מתמשך, בו אדם מנוסה מסייע ומנחה אדם בעל ידע מצומצם יותר.'
         },
         '2': {
-          title: 'מה ההבדל בין חניכה ללמידה?',
-          text: []  
-        },
-        '3': {
           title: '',
           text: ''
         },
-        '4': {
+        '3': {
           title: 'האם לתהליך החניכה יש נקודת סיום?',
           text: {}
         }
@@ -118,7 +106,8 @@ export default {
   },
   components: {
     Navbar,
-    RemovedCircles
+    RemovedCircles,
+    FlipCard
   },
   mounted() {
     document.addEventListener('mouseover', this.keywordHovered);
@@ -384,47 +373,6 @@ export default {
   100% {
     transform: translateX(-50%) scale(1);
   }
-}
-
-.target-front {
-  position: absolute;
-  top: 10vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30vw;
-}
-
-.flip-card {
-  width: 30vw;
-  height: 20vh;
-  margin: 0 auto;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg); /* Flips the card on hover */
-}
-
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.flip-card-back {
-  transform: rotateY(180deg);
-  position: relative;
-  top: 0.45vh;
-  right: 0.195vw;
 }
 
 #subtitle {
