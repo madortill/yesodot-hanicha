@@ -30,10 +30,10 @@
     props: ['folder', 'frontName', 'backName'],
     computed: {
       srcFront() {
-        return `${document.location.origin}/assets/media/${this.folder}/${this.frontName}.png`;
+        return `@/assets/media/${this.folder}/${this.frontName}.png`;
       },
       srcBack() {
-        return `${document.location.origin}/assets/media/${this.folder}/${this.backName}.png`;
+        return `@/assets/media/${this.folder}/${this.backName}.png`;
       }
     }
   }
