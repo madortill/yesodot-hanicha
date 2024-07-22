@@ -17,10 +17,12 @@
 
           <div class="container" v-show="showWindow">
               <div class="close" @click="changeMe">x</div>
-              <div>חניכה על תפקיד  VS חניכה על ביצוע </div>
-              <div>לחצו על סוגי החניכה כדי לגלות מה ההבדלים ביניהם</div>
-              <img src="../assets/media/event/boy-soilder.png"/>
-              <img  src="../assets/media/event/girl-soilder.png"/>
+              <div class="title inner">חניכה על תפקיד  VS חניכה על ביצוע </div>
+              <div class="subtitle inside">לחצו על סוגי החניכה כדי לגלות מה ההבדלים ביניהם</div>
+              <img class="boy solider" src="../assets/media/event/boy-solider.png"/>
+              <img class="girl solider" src="../assets/media/event/girl-solider.png"/>
+              <div class="subject1">תפקיד</div>
+              <div class="subject2">ביצוע</div>
           </div>
       </div>
      
@@ -209,6 +211,16 @@
   width: 60vw;
 }
 
+.inner {
+  position: absolute;
+  top: 5vh;
+}
+
+.inside {
+  animation: none !important;
+  position: absolute;
+  top: 14vh;
+}
 .arrow {
   width: 6vw;
 }
@@ -222,8 +234,8 @@
 
 .arrow-2 {
   position: absolute;
-  left: 36vh;
-  bottom: 10vh;
+  left: 30vh;
+  bottom: 20vh;
   rotate: 290deg;
 }
 .arrow-3 {
@@ -234,8 +246,8 @@
 
 .title-0 {
   position: absolute;
-  left: 7vw;
-  bottom: 14vh;
+  left: 4vw;
+  bottom: 24vh;
 }
 
 .title-1 {
@@ -282,6 +294,40 @@
   right: 6%;
   font-size: 3rem;
   cursor: pointer;
+}
+
+.solider {
+  width: 7vw;
+}
+
+.boy {
+  position: absolute;
+  right: 8vw;
+  top: 16vh;
+}
+
+.girl {
+  position: absolute;
+  left: 8vw;
+  top: 16vh;
+}
+
+.subject1 {
+  font-family: "Heebo-bold";
+  font-size: 3rem;
+  color:#03045E;
+  position: absolute;
+  top: 18vh;
+  right: 17vw;
+}
+
+.subject2 {
+  font-family: "Heebo-bold";
+  font-size: 3rem;
+  color:#03045E;
+  position: absolute;
+  top: 18vh;
+  left: 17vw;
 }
   </style>
   
