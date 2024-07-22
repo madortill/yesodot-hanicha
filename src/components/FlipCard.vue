@@ -27,10 +27,10 @@
     props: ['folder', 'frontName', 'backName'],
     computed: {
       srcFront() {
-        return `url(${document.location.href}/introduction/${this.folder}/${this.frontName}.png`;
+        return `/${this.folder}/${this.frontName}.png`;
       },
       srcBack() {
-        return `url(${document.location.href}/introduction/${this.folder}/${this.backName}.png`;
+        return `/${this.folder}/${this.backName}.png`;
       }
     },
   }
