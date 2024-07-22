@@ -22,15 +22,18 @@
   </template>
   
   <script>
+  import TargetFront from "@/assets/media/introduction/target-front.png";
+  import TargetBack from "@/assets/media/introduction/target-back.png";
+
   export default {
     name: "flip-card",
     props: ['folder', 'frontName', 'backName'],
     computed: {
       srcFront() {
-        return `src/assets/media/${this.folder}/${this.frontName}.png`;
+        return `${document.location.origin}/assets/media/${this.folder}/${this.frontName}.png`;
       },
       srcBack() {
-        return `src/assets/media/${this.folder}/${this.backName}.png`;
+        return `${document.location.origin}/assets/media/${this.folder}/${this.backName}.png`;
       }
     }
   }
