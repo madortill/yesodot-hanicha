@@ -64,7 +64,36 @@
               </div>
       </div>
 
-     
+      <div v-else-if="curSlide === '3'"> 
+        <div class="circle-container">
+            <div
+              v-for="(item, index) in arrayAgo"
+              :key="index"
+              class="circle"
+              :class="getCircleClass(index)"
+            >
+              {{ arrayAgo[index] }}
+            </div>
+          </div>
+          <!-- the arrows -->
+           <div>
+              <img
+              v-for="i in 5"
+              :key="i"
+              class="arrow"
+              :class="getArrowClass(i)"
+              src="../../src/assets/media/event/arrow.svg"
+            />
+           </div>
+         
+      </div>
+
+      <div v-else-if="curSlide === '4'">
+        <div v-for="(item, index) in arrayOfHanicha" :key="index">
+          {{ item }}
+        </div>
+      </div>
+
       <!-- <triangle></triangle> -->
       <button v-if="showButton" class="button next" @click="nextTitle">המשך</button>
       <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
@@ -85,6 +114,7 @@
     data() {
       return {
        array: ["ביצוע מוטורי", "ביצוע קוגנטיבי", "ביצוע רגשי"],
+       arrayAgo: ["משוב", "עיבוד", "תצפית", "תדריך", "הכנה עצמית"],
        showWindow: false,
        didClick: false,
        curSlide: '1',
@@ -103,7 +133,7 @@
         },
         '4': {
           title: 'מודל החניכה על תפקיד',
-          text: ''
+          text: 'אלו השלבים של חניכה על תפקיד:'
         }
       },
       typesOfOnce: {
@@ -116,6 +146,7 @@
       arraySubjects: ['משך החניכה','מורכבות החניכה','מומחיות החונך','תקשורת בין החונך לנחנך'],
       showMeForOnce: false,
       showMeForAlways: false,
+      arrayOfHanicha: ['ניתוח מרכיבי תפקיד ומאפייני הנחנך', 'בניית תכנית חניכה - מטרות, אירועים, זמנים', 'שיחת פתיחה - יצירת חוזה ותיאום ציפיות', 'ניהול האירועים בעזרת מעגלי חניכה קרובים ורחוקים','מפגשי חניכה תקופתיים'],
       };
     },
     methods: {
@@ -146,7 +177,13 @@
       },
       openMeAlways() {
         this.showMeForAlways= true;
-      }
+      },
+      getCircleClass(index) {
+      return "circle" + index;
+      },
+      getArrowClass(index) {
+        return "arrow" + index;
+      },
   },
   computed: {
     showButton() {
@@ -288,6 +325,10 @@
   top: 13vh;
   font-size: 1.4rem;
   color:rgb(241, 108, 89);
+}
+
+.arrow-container {
+  width: 40vw;
 }
 
 .arrow {
@@ -560,6 +601,112 @@
   padding: 0.5vw;
   font-size: 1.2rem;
   width: 6vw;
+}
+
+
+.arrow {
+  width: 4rem;
+  position: absolute;
+}
+
+.arrow1 {
+  top: 35%;
+  right: 42%;
+  transform: rotate(150deg);
+}
+
+.arrow2 {
+  top: 35%;
+  left: 42%;
+  transform: rotate(100deg);
+}
+
+.arrow3 {
+  bottom: 31%;
+  left: 38%;
+  transform: rotate(-10deg);
+}
+
+.arrow4 {
+  bottom: 15%;
+  left: 48%;
+  transform: rotate(-60deg);
+}
+
+.arrow5 {
+  bottom: 31%;
+  right: 37%;
+  transform: rotate(240deg);
+}
+
+.circle {
+  width: 100%;
+  height: 7rem;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 550;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6%;
+  transition: all 0.3s ease;
+  /* animation: floatAnimation 3s ease-in-out infinite; */
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+  /* background-color: #eb5781; */
+}
+
+.circle:hover {
+  box-shadow: 0 15px 9px rgba(0, 0, 0, 0.4);
+  width: 8rem;
+  height: 8rem;
+  padding: 2%;
+  /* cursor: pointer; */
+}
+
+.circle-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40vw; /* Adjust the width to fit your design */
+  height: 70%; /* Adjust the height to fit your design */
+  margin: auto; /* Center the container */
+  display: grid;
+  grid-template-columns: repeat(7, 14.3%);
+  grid-template-rows: repeat(5, 20%);
+}
+
+.circle0 {
+  grid-column-start: 6;
+  grid-row-start: 2;
+  position: relative;
+  background-color: #90E0EF;
+}
+
+.circle1 {
+  grid-column-start: 5;
+  grid-row-start: 4;
+  background-color: #48CAE4;
+}
+
+.circle2 {
+  grid-column-start: 3;
+  grid-row-start: 4;
+  background-color: #00B4D8;
+}
+
+.circle3 {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  background-color: #0096C7;
+}
+
+.circle4 {
+  grid-column-start: 4;
+  grid-row-start: 0;
+  background-color: #0077B6;
 }
 
   </style>
