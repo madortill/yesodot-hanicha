@@ -18,7 +18,19 @@
           <div class="container" v-show="showWindow">
               <div class="close" @click="changeMe">x</div>
               <div class="title inner">סוגי ביצועים</div>
-              <div class="subtitle inside">עברו עם העכבר מעל הסוגים השונים כדי ללמוד עליהם</div>
+              <div class="types-subtitle">עברו עם העכבר מעל הסוגים השונים כדי ללמוד עליהם</div>
+              <div class="wrapper">
+                <div v-for="(value, key) in typesOfOnce" :key="key" class="flip-card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      {{ key }}
+                    </div>
+                    <div class="flip-card-back">
+                      {{ value }}
+                    </div>
+                  </div>
+                </div>
+            </div>
           </div>
       </div>
 
@@ -28,6 +40,14 @@
               <div class="once-container">
                 <div v-show="showMeForOnce" class="info-container">
                   <div v-for="item in arrayInfoOnce" :key="item">
+                    {{ item }}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div v-show="showMeForOnce || showMeForAlways" class="place">
+                  <div v-for="item in arraySubjects" :key="item" class="title-table">
                     {{ item }}
                   </div>
                 </div>
@@ -85,6 +105,11 @@
           title: 'מודל החניכה על תפקיד',
           text: ''
         }
+      },
+      typesOfOnce: {
+        'מוטורי' : 'מיומנות אוטומטית (תפעול נשק)',
+        'קוגנטיבי' : 'מיומנות קבלת החלטות לאור שיקולים וניתוח מצבים (הדרכה בכיתה, עריכת ראיון)',
+        'רגשי' : 'היבט ערכי של הביצוע (הערכים הנדרשים להצלחה)'
       },
       arrayInfoOnce: ['זמן קצר - ימים עד שבועות', 'ביצוע בודד בעל גורם משפיע אחד', 'מומחה תוכן לביצוע', 'חשובה אך לא הכרחית'],
       arrayInfoAlways: ['זמן ארוך יחסית - שבועות עד שנים', 'מספר ביצועים בעלי גורמים משפיעים', 'לא תמיד צריך מומחה תוכן לכל ביצוע', 'קריטית והכרחית'],
@@ -229,7 +254,7 @@
 
   .heart {
     position: fixed;
-    left: 10vw;
+    left: 14vw;
     bottom: 0vh;
     width: 40vw;
     /* filter: sepia(1) saturate(2) hue-rotate(175deg); */
@@ -256,11 +281,15 @@
   top: 5vh;
 }
 
-.inside {
-  animation: none !important;
+.types-subtitle {
   position: absolute;
-  top: 14vh;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 13vh;
+  font-size: 1.4rem;
+  color:rgb(241, 108, 89);
 }
+
 .arrow {
   width: 6vw;
 }
@@ -268,19 +297,19 @@
 .arrow-1 {
   position: absolute;
   bottom: 30vh;
-  left: 38vw;
+  left: 42vw;
   rotate: 120deg;
 }
 
 .arrow-2 {
   position: absolute;
-  left: 30vh;
+  left: 18vw;
   bottom: 20vh;
   rotate: 290deg;
 }
 .arrow-3 {
   position: absolute;
-  left: 28vh;
+  left: 18vw;
   bottom: 47vh;
 }
 .subtext{
@@ -293,19 +322,19 @@
 }
 .title-0 {
   position: absolute;
-  left: 4vw;
+  left: 8vw;
   bottom: 24vh;
 }
 
 .title-1 {
   position: absolute;
-  left: 9vw;
+  left: 13vw;
   top: 35vh;
 }
 
 .title-2 {
   position: absolute;
-  right: 47vw;
+  right: 43vw;
   bottom: 33vh;
 }
 
@@ -316,7 +345,7 @@
 
 .subtitle {
   position: absolute;
-  left: 22vw;
+  left: 27vw;
   bottom: 2rem;
   font-size: 1.4rem;
   color: rgb(241, 108, 89);
@@ -454,5 +483,84 @@
   left: 31.5vw;
   cursor: pointer;
 }
+
+.wrapper {
+  position: relative;
+  top: 55%;
+  left: -50%;
+  transform: translate(50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 60vw;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 17vw; /* Adjust width as needed */
+  height: 17vw; /* Adjust height as needed */
+  perspective: 1000px;
+  border-radius: 50%; /* Add perspective to the container */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+ 
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 5vmax;
+  padding: 2vw; /* Adjust padding as needed */
+  box-sizing: border-box; /* Ensure padding does not affect the total size */
+}
+
+.flip-card-front {
+  background-color: #8cacec;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem; /* Adjust font size as needed */
+  font-family: 'Heebo-bold';
+}
+
+.flip-card-back {
+  background-color: #8cacec;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* Adjust font size as needed */
+  transform: rotateY(180deg);
+}
+
+.place {
+  position: absolute;
+  left: 46.5vw;
+  top: 42vh;
+}
+
+.title-table {
+  background-color: #8cacec;
+  margin-top: 2vh;
+  border-radius: 15px;
+  padding: 0.5vw;
+  font-size: 1.2rem;
+  width: 6vw;
+}
+
   </style>
   

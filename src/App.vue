@@ -23,8 +23,8 @@ export default {
     name: 'app',
     data() {
         return {
-            // page: 1,
-            page: 4,
+            page: 1,
+            // page: 4,
             whereBeen: [2],
             wherePulse: 'event',
         };
