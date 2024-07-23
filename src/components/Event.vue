@@ -2,7 +2,7 @@
     <div id="event">
       <navbar :titleIndex="2" @switch-page="switchPage"></navbar>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div class="text"> {{ slidesInfo[curSlide].text }}</div>
+      <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2' }"> {{ slidesInfo[curSlide].text }}</div>
 
       <div v-if="curSlide === '1'">
         <img 
@@ -17,14 +17,33 @@
 
           <div class="container" v-show="showWindow">
               <div class="close" @click="changeMe">x</div>
-              <div class="title inner">חניכה על תפקיד  VS חניכה על ביצוע </div>
-              <div class="subtitle inside">לחצו על סוגי החניכה כדי לגלות מה ההבדלים ביניהם</div>
-              <img class="boy solider" src="../assets/media/event/boy-solider.png"/>
-              <img class="girl solider" src="../assets/media/event/girl-solider.png"/>
-              <div class="subject1">תפקיד</div>
-              <div class="subject2">ביצוע</div>
+              <div class="title inner">סוגי ביצועים</div>
+              <div class="subtitle inside">עברו עם העכבר מעל הסוגים השונים כדי ללמוד עליהם</div>
           </div>
       </div>
+
+      <div v-else-if="curSlide === '2'">
+              <img class="boy solider" src="../assets/media/event/boy-solider.png"/>
+              <div class="subject2" @click="openMeOnce">ביצוע</div>
+              <div class="once-container">
+                <div v-show="showMeForOnce" class="info-container">
+                  <div v-for="item in arrayInfoOnce" :key="item">
+                    {{ item }}
+                  </div>
+                </div>
+              </div>
+
+              <img class="girl solider" src="../assets/media/event/girl-solider.png"/>
+              <div class="subject1" @click="openMeAlways">תפקיד</div>
+              <div class="always-container">
+                <div v-show="showMeForAlways" class="info-container">
+                  <div v-for="item in arrayInfoAlways" :key="item">
+                    {{ item }}
+                  </div>
+                </div>
+              </div>
+      </div>
+
      
       <!-- <triangle></triangle> -->
       <button v-if="showButton" class="button next" @click="nextTitle">המשך</button>
@@ -55,14 +74,23 @@
           text: 'המיומנות המרכזית עליה מבצעים תהליך חניכה'
         },
         '2': {
-          title: 'מעגל החניכה',
-          text: 'מודל המתאר שלבים של תהליך החניכה על ביצוע בודד'
+          title: ' חניכה על תפקיד  VS חניכה על ביצוע  ',
+          text: 'לחצו על סוגי החניכה כדי לגלות מה ההבדלים ביניהם'
         },
         '3': {
+          title: 'מעגל החניכה',
+          text: ''
+        },
+        '4': {
           title: 'מודל החניכה על תפקיד',
           text: ''
         }
-      }
+      },
+      arrayInfoOnce: ['זמן קצר - ימים עד שבועות', 'ביצוע בודד בעל גורם משפיע אחד', 'מומחה תוכן לביצוע', 'חשובה אך לא הכרחית'],
+      arrayInfoAlways: ['זמן ארוך יחסית - שבועות עד שנים', 'מספר ביצועים בעלי גורמים משפיעים', 'לא תמיד צריך מומחה תוכן לכל ביצוע', 'קריטית והכרחית'],
+      arraySubjects: ['משך החניכה','מורכבות החניכה','מומחיות החונך','תקשורת בין החונך לנחנך'],
+      showMeForOnce: false,
+      showMeForAlways: false,
       };
     },
     methods: {
@@ -88,10 +116,16 @@
         slideNum--;
         this.curSlide = String(slideNum);
       },
+      openMeOnce() {
+        this.showMeForOnce = true;
+      },
+      openMeAlways() {
+        this.showMeForAlways= true;
+      }
   },
   computed: {
     showButton() {
-      return this.curSlide !== '3' && (this.curSlide === '1' ? this.didClick && !this.showWindow : true);
+      return this.curSlide !== '4' && (this.curSlide === '1' ? this.didClick && !this.showWindow : true);
     }
   }
 }
@@ -205,10 +239,16 @@
   
   .text {
   position: absolute;
-  right: 1vw;
-  top: 18rem;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20rem;
   font-size: 2rem;
   width: 60vw;
+}
+.text.right {
+  left: auto;  /* Override left */
+  transform: none;  /* Override transform */
+  right: 1vw !important;
 }
 
 .inner {
@@ -243,7 +283,14 @@
   left: 28vh;
   bottom: 47vh;
 }
-
+.subtext{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 16rem;
+  font-size: 1.4rem;
+  color: rgb(241, 108, 89);
+}
 .title-0 {
   position: absolute;
   left: 4vw;
@@ -302,14 +349,90 @@
 
 .boy {
   position: absolute;
-  right: 8vw;
-  top: 16vh;
+  right: 18.5vw;
+  top: 31vh;
 }
 
 .girl {
   position: absolute;
-  left: 8vw;
-  top: 16vh;
+  left: 17vw;
+  top: 31vh;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.subject1,
+.subject2 {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Hover effect for info-container items */
+.info-container div:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  border-radius: 12vmax;
+}
+
+/* Animation for the info-container */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-container {
+  width: 19vw;
+  height: 31vh;
+  padding: 1vw;
+  background-color: white;
+  border-radius: 4vmax;
+  font-size: 1.48rem;
+  animation: slideIn 0.5s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  gap: 1vw; /* Adjust this value for spacing between items */
+}
+
+/* Add margin to each item inside the info-container */
+.info-container > div {
+  width: 100%; /* Make sure items fill the container width */
+  text-align: center; /* Center text */
+  padding: 0.5vw; /* Adjust padding as needed */
+}
+
+/* Hover effect for info-container items */
+.info-container div:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  border-radius: 12vmax;
+}
+
+.once-container {
+  position: absolute;
+  top: 42vh;
+  left: 24vw;
+}
+
+.always-container {
+  position: absolute;
+  top: 42vh;
+  right: 24vw;
 }
 
 .subject1 {
@@ -317,8 +440,9 @@
   font-size: 3rem;
   color:#03045E;
   position: absolute;
-  top: 18vh;
-  right: 17vw;
+  top: 34vh;
+  right: 31vw;
+  cursor: pointer;
 }
 
 .subject2 {
@@ -326,8 +450,9 @@
   font-size: 3rem;
   color:#03045E;
   position: absolute;
-  top: 18vh;
-  left: 17vw;
+  top: 34vh;
+  left: 31.5vw;
+  cursor: pointer;
 }
   </style>
   
