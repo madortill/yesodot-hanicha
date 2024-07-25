@@ -2,7 +2,7 @@
     <div id="event">
       <navbar :titleIndex="2" @switch-page="switchPage"></navbar>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2' }"> {{ slidesInfo[curSlide].text }}</div>
+      <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2', info: curSlide === '4' }"> {{ slidesInfo[curSlide].text }}</div>
 
       <div v-if="curSlide === '1'">
         <img 
@@ -88,8 +88,8 @@
          
       </div>
 
-      <div v-else-if="curSlide === '4'">
-        <div v-for="(item, index) in arrayOfHanicha" :key="index">
+      <div v-else-if="curSlide === '4'" class="hanicha-container">
+        <div v-for="(item, index) in arrayOfHanicha" :key="index" class="text-container" :style="{ backgroundColor: textColors[index] }">
           {{ item }}
         </div>
       </div>
@@ -114,6 +114,7 @@
     data() {
       return {
        array: ["ביצוע מוטורי", "ביצוע קוגנטיבי", "ביצוע רגשי"],
+       textColors: ['#CAF0F8','#ADE8F4', '#90E0EF', '#48CAE4', '#00B4D8'],
        arrayAgo: ["משוב", "עיבוד", "תצפית", "תדריך", "הכנה עצמית"],
        showWindow: false,
        didClick: false,
@@ -327,13 +328,6 @@
   color:rgb(241, 108, 89);
 }
 
-.arrow-container {
-  width: 40vw;
-}
-
-.arrow {
-  width: 6vw;
-}
 
 .arrow-1 {
   position: absolute;
@@ -707,6 +701,25 @@
   grid-column-start: 4;
   grid-row-start: 0;
   background-color: #0077B6;
+}
+
+.hanicha-container {
+  position: absolute;
+  bottom: 9vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.text-container {
+  width: 20vw;
+  font-size: 1.5rem;
+  margin-top: 1vh;
+  padding: 1vw;
+  border-radius: 20px;
+}
+
+.info {
+  top: 28vh;
 }
 
   </style>
