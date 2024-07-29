@@ -75,7 +75,6 @@ export default {
     overflow: hidden;
 }
 
-
 #icon-bahadim {
     max-width: 100px;
     left: 0;

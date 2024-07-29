@@ -11,7 +11,7 @@
           class="heart" 
           @click="changeMe"/>
 
-          <img v-for="i in 3" :key="i" :class="{ [`arrow-${i}`]: true, arrow: true }" src="../assets/media/event/arrow.svg"/>
+          <img v-for="i in 3" :key="i" :class="{ [`arrow-black-${i}`]: true, arrow: true }" src="../assets/media/event/arrow1.svg"/>
           <div v-for="(title, index) in array" :key="index" :class="['titles', `title-${index}`]"> {{ title }} </div>
           <div class="subtitle">תראו ללב קצת אהבה ולחצו עליו</div>
 
@@ -329,22 +329,22 @@
 }
 
 
-.arrow-1 {
+.arrow-black-1 {
   position: absolute;
   bottom: 30vh;
   left: 42vw;
   rotate: 120deg;
 }
 
-.arrow-2 {
+.arrow-black-2 {
   position: absolute;
-  left: 18vw;
-  bottom: 20vh;
+  left: 21vw;
+  bottom: 23vh;
   rotate: 290deg;
 }
-.arrow-3 {
+.arrow-black-3 {
   position: absolute;
-  left: 18vw;
+  left: 20vw;
   bottom: 47vh;
 }
 .subtext{
@@ -357,20 +357,20 @@
 }
 .title-0 {
   position: absolute;
-  left: 8vw;
+  left: 11vw;
   bottom: 24vh;
 }
 
 .title-1 {
   position: absolute;
-  left: 13vw;
-  top: 35vh;
+  left: 14vw;
+  top: 40vh;
 }
 
 .title-2 {
   position: absolute;
-  right: 43vw;
-  bottom: 33vh;
+  right: 45vw;
+  bottom: 30vh;
 }
 
 .titles {
@@ -380,7 +380,7 @@
 
 .subtitle {
   position: absolute;
-  left: 27vw;
+  left: 25.5vw;
   bottom: 2rem;
   font-size: 1.4rem;
   color: rgb(241, 108, 89);
@@ -716,7 +716,16 @@
   margin-top: 1vh;
   padding: 1vw;
   border-radius: 20px;
+  cursor: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.text-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: auto;
+}
+
 
 .info {
   top: 28vh;
