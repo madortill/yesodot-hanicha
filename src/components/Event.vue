@@ -2,7 +2,7 @@
     <div id="event">
       <navbar :titleIndex="2" @switch-page="switchPage"></navbar>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2', info: curSlide === '4' }"> {{ slidesInfo[curSlide].text }}</div>
+      <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2', info: curSlide === '4' ||  curSlide === '5'}" v-html="slidesInfo[curSlide].text"> </div>
 
       <div v-if="curSlide === '1'">
         <img 
@@ -94,6 +94,21 @@
         </div>
       </div>
 
+      <div v-else class="wrapper-q">
+        <div
+          v-for="(value, key) in slide5Info"
+          :id="key"
+          :key="key"
+          :class="{ 'container-q': true} "
+          @click= "!didClick2 ? checkIfCorrect(key) : null"
+        >
+          {{ value }}
+        </div>
+      </div>
+      <div id="yalla-next" v-if="curSlide === '5' && didClick2" @click="nextPage"></div>
+      <div class="msg" v-if="curSlide === '5'"> {{ message }} </div>
+
+
       <!-- <triangle></triangle> -->
       <button v-if="showButton" class="button next" @click="nextTitle">המשך</button>
       <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
@@ -135,6 +150,10 @@
         '4': {
           title: 'מודל החניכה על תפקיד',
           text: 'אלו השלבים של חניכה על תפקיד:'
+        },
+        '5': {
+          title:'לפניכם סיטואציה, בחרו בתשובה המתאימה',
+          text: 'סמלת הקורס לימדה את יובל (המ"כית החדשה) את תוכן השיעור "פירוק והרכבה". <br>באיזה סוג של חניכה מדובר?'
         }
       },
       typesOfOnce: {
@@ -148,7 +167,13 @@
       showMeForOnce: false,
       showMeForAlways: false,
       arrayOfHanicha: ['ניתוח מרכיבי תפקיד ומאפייני הנחנך', 'בניית תכנית חניכה - מטרות, אירועים, זמנים', 'שיחת פתיחה - יצירת חוזה ותיאום ציפיות', 'ניהול האירועים בעזרת מעגלי חניכה קרובים ורחוקים','מפגשי חניכה תקופתיים'],
-      };
+      slide5Info: {
+        'hello1' : 'חניכה על ביצוע',
+        'hello2' : 'חניכה על תפקיד'
+      },
+      didClick2: false,
+      message: ""
+    };
     },
     methods: {
       nextPage() {
@@ -185,10 +210,26 @@
       getArrowClass(index) {
         return "arrow" + index;
       },
-  },
+      checkIfCorrect(key) {
+        document.getElementById("hello1").classList.add("clicked");
+        document.getElementById("hello2").classList.add("clicked");
+        if (key === "hello1") {
+          this.didClick2 = true;
+          document.getElementById("hello1").classList.add("correct");
+          document.getElementById("hello2").classList.remove("incorrect");
+          this.message = "כל הכבוד!"
+          document.getElementById("hello1").removeEventListener("click", this.checkIfCorrect);
+          document.getElementById("hello2").removeEventListener("click", this.checkIfCorrect);
+        } else {
+          document.getElementById("hello1").classList.remove("correct");
+          document.getElementById("hello2").classList.add("incorrect");
+          this.message = "לא נורא, נסה שוב"
+        }
+      },
+      },
   computed: {
     showButton() {
-      return this.curSlide !== '4' && (this.curSlide === '1' ? this.didClick && !this.showWindow : true);
+      return this.curSlide !== '5' && (this.curSlide === '1' ? this.didClick && !this.showWindow : true);
     }
   }
 }
@@ -731,5 +772,79 @@
   top: 28vh;
 }
 
+#yalla-next {
+  width: 9vmax;
+  height: 10vmax;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  background-image: url(../assets/media/general/yalla-next.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  animation: pulse-smaller 1.25s infinite;
+}
+
+.correct {
+  background-color: rgba(111, 222, 111, 0.543);
+  border: none !important;
+}
+
+.incorrect {
+  background-color: rgba(241, 109, 89, 0.824);
+  border: none !important;
+}
+
+.clicked {
+  animation: none !important;
+}
+
+
+.container-q {
+  font-size: 1.8rem;
+  width: 20vw;
+  height: 35vh;
+  border: 2.5px solid #023E8A;
+  color: #023E8A;
+  border-radius: 5vmax;
+  align-content: center;
+  cursor: pointer;
+  padding: 0.9vw;
+  animation: pulse-smaller 2s infinite;
+}
+
+@keyframes pulse-smaller {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+.wrapper-q {
+  position: absolute;
+  top: 63%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50vw;
+}
+
+.msg {
+  position: absolute;
+  font-size: 3rem;
+  font-family: "Heebo-bold";
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 9vh;
+  color: #023E8A;
+}
   </style>
   

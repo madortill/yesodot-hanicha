@@ -29,7 +29,11 @@
     },
     methods: {
       nextPage() {
-        this.$emit("switch-screen", 4);
+        if (this.wherePulse === "event") {
+          this.$emit("switch-screen", 4);
+        } else if (this.wherePulse === "educated") {
+          this.$emit("switch-screen", 6);
+        }
       },
       switchPage(index) {
         if (this.whereBeen.includes(index)) {
@@ -64,11 +68,11 @@
   .event {
     position: absolute;
     top: 35vh;
-    cursor: pointer; 
 }
 
 .pulse {
   animation: pulse-smaller 1.5s infinite;
+  cursor: pointer; 
 }
 
 @keyframes pulse-smaller {
