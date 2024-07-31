@@ -1,9 +1,25 @@
 <template>
     <div id="educated">
-      <navbar :titleIndex="3" @switch-page="switchPage"></navbar>
+      <div v-if="!showComponent">
+        <navbar :titleIndex="3" @switch-page="switchPage"></navbar>
       <div class="title">{{ slidesInfo[curSlide].title }}</div>
       
-      <div v-if="curSlide === '1'" class="pictures-container">
+      <div v-if="!clicked" id="clickMe" @click="showInfo">
+       <p>לחצו עליי</p>
+     </div>
+     <div id="disappearing"> עברו בכל השלבים עד שיהפכו לירוקים </div>
+
+      <div class="pictures-container">
+        <div class="right-container">
+          <div v-for="(value, key) in rightSubjcets" :key="key" :id="key" :class="['subject', isGreen[key] ? 'green' : '']" @click="goHere">
+            {{ value }}
+          </div>
+        </div>
+        <div class="left-container">
+          <div v-for="(value, key) in leftSubjcets" :key="key" :id="key" :class="['subject', isGreen[key] ? 'green' : '']" @click="goHere">
+            {{ value }}
+          </div>
+        </div>
         <div class="flip-card flip-card-left">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -14,6 +30,7 @@
             </div>
           </div>
         </div>
+  
         <div class="flip-card flip-card-right">
           <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -25,68 +42,108 @@
           </div>
         </div>
       </div>
-  
-      <!-- <button v-if="curSlide !== '3'" class="button next" @click="nextTitle">המשך</button> -->
-      <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+      </div>
+     
+      <component v-else :componentName="whereToGoNow" :is="whereToGoNow" @add-green="addGreen"></component>
+      <div id="yalla-next" v-if="allGreen" @click="nextPage"></div>
+
     </div>
   </template>
   
   <script>
- import Navbar from './Navbar.vue';
-
-export default {
-  name: "educated",
-  props: ['whereBeen'],
-  components: {
-    Navbar,
-  },
-  emits: ['switch-screen', 'switch-page'],
-  data() {
-    return {
-      slidesInfo: {
-        '1': {
-          'title': 'בתור חונכים, עלינו לנתח ולאפיין שני היבטים של הנחנך',
-          'text': ''
+  import Navbar from '@/components/Navbar.vue';
+  import LearningHabbits from './LearningHabbits.vue'; 
+import Motivation from './Motivation.vue'; 
+import FeelingCapable from './FeelingCapable.vue'; 
+import Advanced from './Advanced.vue'; 
+import Job from './Job.vue'; 
+import ThinkingStyles from './ThinkingStyles.vue'; 
+  
+  export default {
+    name: "educated",
+    props: ['whereBeen'],
+    components: {
+      Navbar,
+      LearningHabbits,
+      Motivation,
+      FeelingCapable,
+      Advanced,
+      Job,
+      ThinkingStyles
+    },
+    emits: ['switch-screen', 'switch-page'],
+    data() {
+      return {
+        slidesInfo: {
+          '1': {
+            'title': 'בתור חונכים, עלינו לנתח ולאפיין שני היבטים של הנחנך',
+            'text': ''
+          },
+          whereClicked: [],
         },
-        '2': {
-          'title': '',
-          'text': ''
+        curSlide: '1',
+        rightSubjcets: {
+          'ThinkingStyles' : 'סגנונות חשיבה ולמידה',
+          'Job' : 'תפיסת תפקיד',
+          'Advanced' : 'ניסיון קודם בתהליך חניכה'
         },
-        '3': {
-          'title': '',
-          'text': ''
-        },
-      },
-      curSlide: '1',
-    };
-  },
-  methods: {
-    nextPage() {
-      this.$emit("switch-screen", 7);
+        leftSubjcets: {
+          'LearningHabbits' : 'הרגלי למידה',
+          'Motivation' : 'מוטיבציה',
+          'FeelingCapable' : 'תחושת מסוגלות עצמית'
+        } ,
+        clicked: false,
+        showComponent: false,
+        whereToGoNow :'',
+        whereGreen: [],
+        isGreen: {
+          LearningHabbits: false,
+          Motivation: false,
+          FeelingCapable: false,
+          Advanced: false,
+          Job: false,
+          ThinkingStyles: false
+        }
+      };
     },
-    switchPage(index) {
-      if (this.whereBeen.includes(index)) {
-        this.$emit('switch-screen', index);
-      }
-    },
-    nextTitle() {
-      let slideNum = Number(this.curSlide);
-      slideNum++;
-      this.curSlide = String(slideNum);
-    },
-    lastTitle() {
-      let slideNum = Number(this.curSlide);
-      slideNum--;
-      this.curSlide = String(slideNum);
-    },
-    showSubtitles() {
-      this.showingSubtitles = true;
+    computed: {
+      allGreen() {
+      const allTrue = Object.values(this.isGreen).every(value => value === true);
+      return allTrue;
     }
   },
+    methods: {
+      nextPage() {
+        this.$emit("switch-screen", 7);
+      },
+      switchPage(index) {
+        if (this.whereBeen.includes(index)) {
+          console.log(this.whereBeen);
+          this.$emit('switch-screen', index);
+        }
+      },
+    showInfo() {
+      console.log("Showing info"); // Debugging line
+      setTimeout(() => {
+        this.clicked = true;
+      }, 3500);
+      document.getElementById("clickMe").classList.add("clicked");
+        const disappearingMsg = document.getElementById("disappearing");
+        disappearingMsg.classList.add("show");
+        document.getElementById("clickMe").classList.add("disappear");
+    },
+    goHere(event) {
+      this.whereToGoNow = event.currentTarget.id;
+      this.showComponent = true;
+    },
+    addGreen(componentName) {
+      this.showComponent = false;
+      this.isGreen[componentName] = true;
+    },
+    }
 }
-</script>
-
- 
+  </script>
+  
 <style scoped>
 #educated {
   font-family: "Heebo";
@@ -183,8 +240,8 @@ export default {
   position: absolute;
   top: 60%;
   left: 50%;
-  width: 60vw; /* Increased width */
-  justify-content: space-around;
+  width: 50vw; /* Increased width */
+  justify-content: space-evenly;
   transform: translate(-50%, -50%);
 }
 
@@ -201,7 +258,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 2s; /* Flip duration */
+  transition: transform 3s; /* Flip duration */
   transform-style: preserve-3d;
   border-radius: 50%;
 }
@@ -235,8 +292,7 @@ export default {
 }
 
 .title-text {
-  font-family: 'Heebo-bold';
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -278,6 +334,164 @@ export default {
   }
   100% {
     transform: rotateY(-180deg);
+  }
+}
+.right-container, .left-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20vw; /* Adjust width as needed */
+}
+
+.right-container {
+  right: -12vw; /* Adjust positioning as needed */
+}
+
+.left-container {
+  left: -12vw; /* Adjust positioning as needed */
+}
+
+.subject {
+  background-color: white;
+  border-radius: 50px;
+  color: rgb(83, 83, 141);
+  font-size: 1.2rem;
+  padding: 1.3vw;
+  cursor: pointer;
+  margin: 0.5rem 0; /* Add margin for spacing between subjects */
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.right-container .subject {
+  animation: slideInFromRight 2s forwards; /* Adjust duration as needed */
+  animation-delay: calc(var(--index) * 0.5s); /* Adjust delay as needed */
+}
+
+.left-container .subject {
+  animation: slideInFromLeft 2s forwards; /* Adjust duration as needed */
+  animation-delay: calc(var(--index) * 0.5s); /* Adjust delay as needed */
+}
+
+#clickMe { 
+  background-image: url(../assets/media/general/light.png);
+  width: 6vmax;
+  height: 4vmax;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 3%;
+  right: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+.clicked {
+  animation: none !important;
+}
+.disappear {
+  animation: fadeout 5s forwards !important;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#clickMe p {
+  position: relative;
+  top: 3.2vh;
+}
+
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#disappearing {
+  opacity: 1; /* Start with opacity 0 for smoother transition */
+  visibility: hidden;
+  
+}
+
+.show {
+  opacity: 1; /* Ensure opacity transition */
+  position: absolute;
+  visibility: visible !important;
+  top: 5vh;
+  right: 7vw;
+  border: 2px solid #023E8A;
+  padding: 0.5vw;
+  width: 8vw;
+  border-radius: 20vw;
+  animation: fadeout 5s forwards;
+}
+
+
+.green {
+  background-color: rgba(111, 222, 111, 0.543);
+  color:#fff;
+}
+
+#yalla-next {
+  width: 9vmax;
+  height: 10vmax;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  background-image: url(../assets/media/general/yalla-next.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  animation: pulse-smaller 1.25s infinite;
+}
+
+@keyframes pulse-smaller {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

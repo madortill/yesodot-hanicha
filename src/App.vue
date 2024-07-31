@@ -8,7 +8,8 @@
       <event v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></event>
       <triangle v-show="page === 5" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
       <educated v-show="page === 6" @switch-screen="switchPage" :whereBeen="whereBeen"></educated>
-   
+      <triangle v-show="page === 7" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
+      <educator  v-show="page === 8" @switch-screen="switchPage" :whereBeen="whereBeen"></educator>
   </div>
 </template>
 
@@ -19,13 +20,14 @@ import Introduction from '@/components/Introduction.vue';
 import Triangle from './components/Triangle.vue'
 import Event from './components/Event.vue'
 import Educated from './components/Educated.vue';
+import Educator from './components/Educator.vue';
 
 export default {
     name: 'app',
     data() {
         return {
-            // page: 1,
-            page: 6,
+            page: 1,
+            // page: 6,
             whereBeen: [2],
             wherePulse: 'event',
         };
@@ -35,13 +37,15 @@ export default {
         Introduction,
         Triangle,
         Event,
-        Educated
+        Educated,
+        Educator,
     },
     methods: {
         switchPage(page) {
             this.page = page;
             if (!this.whereBeen.includes(page)) {
             this.whereBeen.push(page);
+            console.log(this.whereBeen);
 
             if (this.whereBeen.includes(5)) {
                  this.wherePulse= 'educated';

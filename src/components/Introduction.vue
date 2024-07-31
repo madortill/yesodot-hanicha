@@ -58,7 +58,7 @@ export default {
       keyWords: ['למידה', 'קשר מתמשך', 'מסייע ומנחה'],
       showImage: false,
       slide3Info: {
-        'subtitle' : 'לחצו על אחת האופציות וגלו מה התשובה הנכונה',
+        'subtitle' : 'בחרו בתשובה הנכונה',
         'first' : '<div style="font-weight: bold; font-size: 2.4rem;">כן!</div> תהליך חניכה טוב הוא תהליך חניכה שמסתיים!<br><br> הסוף תלוי במידת<br> העצמאות שאליה הגיע הנחנך בביצועיו<br>',
         'second' : '<div style="font-weight: bold; font-size: 2.4rem;">לא!</div> תהליך חניכה אף פעם לא מסתיים!<br><br> תמיד יש לאן לשאוף ולהשתפר, לכן התליך הוא בלתי נגמר'
       },

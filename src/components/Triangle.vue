@@ -33,6 +33,8 @@
           this.$emit("switch-screen", 4);
         } else if (this.wherePulse === "educated") {
           this.$emit("switch-screen", 6);
+        }  else if (this.wherePulse === "educator") {
+          this.$emit("switch-screen", 8);
         }
       },
       switchPage(index) {
