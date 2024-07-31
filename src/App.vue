@@ -1,15 +1,20 @@
 <template>
   <div id="app">
+     <navbar v-if="page > 0" :componentName="componentOrder[page]" @go-to-page="goToPage" :whereBeen="whereBeen"></navbar>
       <img id="icon-bahadim" src="@/assets/media/general/mifkada-logo.png" alt="bahadim"/>
       <img id="icon-til" src="@/assets/media/general/madortill.png" alt="till"/>
-      <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
-      <introduction v-show="page === 2" @switch-screen="switchPage" :whereBeen="whereBeen"></introduction>
-      <triangle v-show="page === 3" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
-      <event v-show="page === 4" @switch-screen="switchPage" :whereBeen="whereBeen"></event>
-      <triangle v-show="page === 5" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
-      <educated v-show="page === 6" @switch-screen="switchPage" :whereBeen="whereBeen"></educated>
-      <triangle v-show="page === 7" @switch-screen="switchPage" :whereBeen="whereBeen" :wherePulse="wherePulse"></triangle>
-      <educator  v-show="page === 8" @switch-screen="switchPage" :whereBeen="whereBeen"></educator>
+    <KeepAlive>
+        <component :is="componentOrder[page]" @switch-screen="switchPage" :wherePulse="wherePulse"></component>
+    </KeepAlive>
+
+      <!-- <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
+      <introduction v-show="page === 2" @switch-screen="switchPage"></introduction>
+      <triangle v-show="page === 3" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
+      <event v-show="page === 4" @switch-screen="switchPage"></event>
+      <triangle v-show="page === 5" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
+      <educated v-show="page === 6" @switch-screen="switchPage"></educated>
+      <triangle v-show="page === 7" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
+      <educator  v-show="page === 8" @switch-screen="switchPage"></educator> -->
   </div>
 </template>
 
@@ -21,18 +26,30 @@ import Triangle from './components/Triangle.vue'
 import Event from './components/Event.vue'
 import Educated from './components/Educated.vue';
 import Educator from './components/Educator.vue';
+import Navbar from './components/Navbar.vue';
+import { KeepAlive } from 'vue';
 
 export default {
     name: 'app',
     data() {
         return {
-            page: 1,
-            // page: 6,
-            whereBeen: [2],
+            page: 0,
+            whereBeen: ["start-screen"],
             wherePulse: 'event',
+            componentOrder: [
+                "start-screen",
+                "introduction",
+                "triangle",
+                "event",
+                "triangle",
+                "educated",
+                "triangle",
+                "educator"
+            ]
         };
     },
     components: {
+        Navbar,
         StartScreen,
         Introduction,
         Triangle,
@@ -41,21 +58,22 @@ export default {
         Educator,
     },
     methods: {
-        switchPage(page) {
-            this.page = page;
-            if (!this.whereBeen.includes(page)) {
-            this.whereBeen.push(page);
-            console.log(this.whereBeen);
-
-            if (this.whereBeen.includes(5)) {
-                 this.wherePulse= 'educated';
-            } 
-
-            if (this.whereBeen.includes(7)) {
-                this.wherePulse= 'educator';
+        switchPage() {
+            this.page++;
+            
+            if (!this.whereBeen.includes(this.componentOrder[this.page])) {
+                this.whereBeen.push(this.componentOrder[this.page]);
             }
-        }
+            if (this.page === 4) {
+                this.wherePulse = 'educated';
+            }
+            if (this.page === 6) {
+                this.wherePulse = 'educator';
+            }
         },
+        goToPage (name) {
+            this.page = this.componentOrder.indexOf(name);
+        }
     },
 };
 </script>

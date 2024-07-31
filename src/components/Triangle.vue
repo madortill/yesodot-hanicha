@@ -1,6 +1,5 @@
 <template>
     <div id="triangle">
-      <navbar :titleIndex="1" @switch-page="switchPage"></navbar>
       <div class="title">לתהליך החניכה ישנם שלושה גורמים משפיעים</div>
       <img v-for="(item, index) in array" 
       :key="index" 
@@ -13,14 +12,11 @@
   </template>
   
   <script>
-  import Navbar from '@/components/Navbar.vue';
+  
   
   export default {
     name: "triangle",  
-    props: ['whereBeen', 'wherePulse'],
-    components: {
-      Navbar
-    },
+    props: ['wherePulse'],
     emits: ['switch-screen', 'switch-page'],  
     data() {
       return {
@@ -30,18 +26,14 @@
     methods: {
       nextPage() {
         if (this.wherePulse === "event") {
-          this.$emit("switch-screen", 4);
+          this.$emit("switch-screen");
         } else if (this.wherePulse === "educated") {
-          this.$emit("switch-screen", 6);
+          this.$emit("switch-screen");
         }  else if (this.wherePulse === "educator") {
-          this.$emit("switch-screen", 8);
+          this.$emit("switch-screen");
         }
       },
-      switchPage(index) {
-        if (this.whereBeen.includes(index)) {
-          this.$emit('switch-screen', index);
-        }
-      },
+      
       imageSrc(item) {
         return new URL(`../assets/media/triangle/${item}.png`, import.meta.url).href;
       }

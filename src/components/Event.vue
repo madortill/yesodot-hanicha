@@ -1,6 +1,5 @@
 <template>
     <div id="event">
-      <navbar :titleIndex="2" @switch-page="switchPage"></navbar>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
       <div :class="{ text: true, right: curSlide === '1', subtext: curSlide === '2', info: curSlide === '4' ||  curSlide === '5'}" v-html="slidesInfo[curSlide].text"> </div>
 
@@ -116,15 +115,8 @@
   </template>
   
   <script>
-   import Navbar from './Navbar.vue';
-   import Triangle from './Triangle.vue'
   export default {
     name: "event",  
-    props: ['whereBeen'],
-    components: {
-      Navbar,
-      Triangle
-    },
     emits: ['switch-screen', 'switch-page'],  
     data() {
       return {
@@ -177,13 +169,9 @@
     },
     methods: {
       nextPage() {
-        this.$emit("switch-screen", 5);
+        this.$emit("switch-screen");
       },
-      switchPage(index) {
-        if (this.whereBeen.includes(index)) {
-          this.$emit('switch-screen', index);
-        }
-      },
+      
       changeMe() {
         this.showWindow = !this.showWindow;
         this.didClick = true;

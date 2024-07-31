@@ -1,7 +1,6 @@
 <template>
     <div id="educated">
       <div v-if="!showComponent">
-        <navbar :titleIndex="3" @switch-page="switchPage"></navbar>
       <div class="title">{{ slidesInfo[curSlide].title }}</div>
       
       <div v-if="!clicked" id="clickMe" @click="showInfo">
@@ -51,7 +50,7 @@
   </template>
   
   <script>
-  import Navbar from '@/components/Navbar.vue';
+  
   import LearningHabbits from './LearningHabbits.vue'; 
 import Motivation from './Motivation.vue'; 
 import FeelingCapable from './FeelingCapable.vue'; 
@@ -61,9 +60,7 @@ import ThinkingStyles from './ThinkingStyles.vue';
   
   export default {
     name: "educated",
-    props: ['whereBeen'],
     components: {
-      Navbar,
       LearningHabbits,
       Motivation,
       FeelingCapable,
@@ -114,13 +111,7 @@ import ThinkingStyles from './ThinkingStyles.vue';
   },
     methods: {
       nextPage() {
-        this.$emit("switch-screen", 7);
-      },
-      switchPage(index) {
-        if (this.whereBeen.includes(index)) {
-          console.log(this.whereBeen);
-          this.$emit('switch-screen', index);
-        }
+        this.$emit("switch-screen");
       },
     showInfo() {
       console.log("Showing info"); // Debugging line

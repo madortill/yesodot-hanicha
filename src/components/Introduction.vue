@@ -1,7 +1,5 @@
 <template>
   <div id="introduction">
-    <navbar :titleIndex="0" @switch-page="switchPage"></navbar>
-
     <div class="titles">{{ slidesInfo[curSlide].title }}</div>
 
     <div v-if="curSlide === '1' && !didClick1" id="clickMe" @click="showInfo">
@@ -43,12 +41,11 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
+
 import RemovedCircles from './RemovedCircles.vue';
 import FlipCard from './FlipCard.vue';
 export default {
   name: "introduction",
-  props: ['whereBeen'],
   data() {
     return {
       curSlide: '1',
@@ -105,7 +102,6 @@ export default {
     }
   },
   components: {
-    Navbar,
     RemovedCircles,
     FlipCard
   },
@@ -113,11 +109,7 @@ export default {
     document.addEventListener('mouseover', this.keywordHovered);
   },
   methods: {
-    switchPage(index) {
-        if (this.whereBeen.includes(index)) {
-          this.$emit('switch-screen', index);
-        }
-      },
+    
   keywordHovered(event) {
     if (event.target.classList.contains('keyword') && !this.showImage) {
       setTimeout(() => {
@@ -179,7 +171,7 @@ export default {
   },
   
   nextPage() {
-    this.$emit("switch-screen", 3);
+    this.$emit("switch-screen");
   }
   }
 }

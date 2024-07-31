@@ -41,7 +41,7 @@ export default {
       this.showInstructions = true;
     },
     nextPage() {
-      this.$emit("switch-screen", 2);
+      this.$emit("switch-screen");
     }
   }
 }
