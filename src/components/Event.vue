@@ -108,7 +108,7 @@
       <div class="msg" v-if="curSlide === '5'"> {{ message }} </div>
 
 
-      <!-- <triangle></triangle> -->
+    
       <button v-if="showButton" class="button next" @click="nextTitle">המשך</button>
       <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
     </div>

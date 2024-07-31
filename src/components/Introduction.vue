@@ -152,13 +152,13 @@ export default {
     }
   },
   nextTitle() {
-    this.didVisit = true;
-    this.showImage = true;
     let slideNum = Number(this.curSlide);
     slideNum++;
     this.curSlide = String(slideNum);
   },
   lastTitle() {
+    this.didVisit = true;
+    this.showImage = true;
     let slideNum = Number(this.curSlide);
     slideNum--;
     this.curSlide = String(slideNum);

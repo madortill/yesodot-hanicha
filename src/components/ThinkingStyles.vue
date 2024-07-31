@@ -1,154 +1,141 @@
 <template>
-    <div id="thinking-styles">
-      <div class="back-home" @click="onSwitchPage"></div>
-      <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
-      <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
-      <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+  <div id="thinking-styles">
+    <div class="back-home" @click="onSwitchPage"></div>
+    <div class="title">{{ slidesInfo[curSlide].title }}</div>
+    <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"></div>
+
+    <div class="flip-card-container">
+      <div v-for="(card, index) in cards" :key="index" class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img :src="card.image" alt="Card image" />
+          </div>
+          <div class="flip-card-back">
+            <h1>{{ card.title }}</h1>
+          </div>
+        </div>
+      </div>
     </div>
-  </template>
-  
-  
-  <script>
+  </div>
+</template>
 
+<script>
+export default {
+  name: 'thinking-styles',
+  props: ['componentName'],
+  data() {
+    return {
+      curSlide: '1',
+      slidesInfo: {
+        '1': {
+          title: 'סגנונות חשיבה ולמידה',
+          text: 'ישנם שלושה סוגים של סגנונות למידה עיקריים ולכל אדם יש סגנון שמתאים לו'
+        }
+      },
+      cards: [
+        { image: 'src/assets/media/educated/hearing.png', title: 'שמיעתי' },
+        { image: 'src/assets/media/educated/touching.png', title: 'מוחשי' },
+        { image: 'src/assets/media/educated/visual.png', title: 'ויזואלי' }
+      ]
+    };
+  },
+  methods: {
+    onSwitchPage() {
+      this.$emit("add-green", this.componentName);
+    }
+  }
+};
+</script>
 
-  export default {
-      name: 'thinking-styles',
-      props: ['componentName'],
-      data() {
-          return {
-            curSlide: '1',
-            slidesInfo: {
-              '1' : {
-                title: 'סגנונות חשיבה ולמידה',
-                text: ''
-              },
-              '2' : {
-                title: '',
-                text: ''
-              }
-            }
-          };
-      },
-      components: {
-      },
-      methods: {
-        onSwitchPage() {
-          this.$emit("add-green", this.componentName);
-        },
-        nextTitle() {
-          this.didVisit = true;
-          this.showImage = true;
-          let slideNum = Number(this.curSlide);
-          slideNum++;
-          this.curSlide = String(slideNum);
-        },
-        lastTitle() {
-          let slideNum = Number(this.curSlide);
-          slideNum--;
-          this.curSlide = String(slideNum);
-          this.showImage = this.didVisit;
-        },
-      },
-  };
-  </script>
-  
-  
-  <style scoped>
+<style scoped>
 .back-home {
-      background-image: url(../assets/media/educated/go-home.png);
-      width: 6vmax;
-      height: 5.5vmax;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      position: absolute;
-      top: 5%;
-      right: 2%;
-      cursor: pointer;
-      animation: pulse 2s infinite;
-    }
-
-    
-    .title {
-      font-size: 4rem;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 11rem;
-      font-family: 'Heebo-bold';
-      color: #0077B6;
-      width: 100vw;
-    }
-
-    
-  .text {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 20rem;
-    font-size: 2rem;
-    width: 60vw;
-  }
-
-  .button {
-  transform: translateX(-50%);
+  background-image: url(../assets/media/educated/go-home.png);
+  width: 6vmax;
+  height: 5.5vmax;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 5%;
+  right: 2%;
   cursor: pointer;
-  color: #fff;
-  background-color: #0492bd;
-  border: none;
-  border-radius: 100px;
-  font-family: "Heebo";
-  width: 11rem;
-  font-size: 1.5rem;
-  padding: 1rem;
-  animation: borderPulse 4000ms infinite ease-out;
+  animation: pulse 2s infinite;
 }
 
-.button:hover,
-.button:focus {
-  animation: borderPulse 4000ms infinite ease-out, hoverShine 200ms;
-}
-
-@keyframes borderPulse {
-  0% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
-  }
-  35% {
-    box-shadow: inset 0px 0px 0px 3px rgba(117, 117, 255, .2), 0px 0px 0px 10px rgba(255, 255, 255, 0);
-  }
-  50% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
-  }
-  75% {
-    box-shadow: inset 0px 0px 0px 3px rgba(117, 117, 255, .2), 0px 0px 0px 10px rgba(255, 255, 255, 0);
-  }
-  100% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
-  }
-}
-
-@keyframes hoverShine {
-  0% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
-  }
-  50% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 100%);
-  }
-  100% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 100%);
-  }
-}
-
-.next {
+.title {
+  font-size: 4rem;
   position: absolute;
-  bottom: 12%;
-  left: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 11rem;
+  font-family: 'Heebo-bold';
+  color: #0077B6;
+  width: 100vw;
 }
 
-.back {
+.text {
   position: absolute;
-  bottom: 12%;
-  right: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20rem;
+  font-size: 2rem;
+  width: 60vw;
 }
-  </style>
-  
+
+.flip-card-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rem;
+}
+
+.flip-card {
+  perspective: 1000px;
+  margin-left: 1vw;
+  width: 17vw; /* Adjusted to match image size */
+  height: 17vw; /* Adjusted to match image size */
+  border-radius: 50%;
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+  border-radius: 50%;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.flip-card-back {
+  background-color: rgb(83, 83, 141);
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

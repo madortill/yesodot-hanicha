@@ -1,35 +1,40 @@
 <template>
-    <div id="motivation">
-      <div class="back-home" @click="onSwitchPage"></div>
-      <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
+  <div id="motivation">
+    <div class="back-home" @click="onSwitchPage"></div>
+    <div class="title"> {{ slidesInfo[curSlide].title }}</div>
+    <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
 
-      <div v-if="curSlide === '1'">
-          <div class="wrapper">
-            <div v-for="(value, key) in typesOfOnce" :key="key" class="flip-card">
-              <div class="flip-card-inner">
-                <div class="flip-card-front">
-                  {{ key }}
-                </div>
-                <div class="flip-card-back">
-                  {{ value }}
-                </div>
+    <div v-if="curSlide === '1'">
+        <div class="wrapper">
+          <div v-for="(value, key) in typesOfOnce" :key="key" class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                {{ key }}
+              </div>
+              <div class="flip-card-back">
+                {{ value }}
               </div>
             </div>
+          </div>
+      </div>
+    </div>
+
+    <div v-else>
+      <div class="containerOfMotivation">
+        <div v-for="item in motivationArray" :key="item" class="white-wrap appear">
+          {{ item }}
         </div>
       </div>
-
-       <div v-else class="containerOfMotivation">
-          <div v-for="item in motivationArray" :key="item" class="white-wrap">
-          {{ item }}
-          </div>
-       </div>
-
-      <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
-      <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+      <div v-for="(title, index) in titles" :key="title" :class="[`place-title-${index}`, 'titleColor', 'title-slide']">
+        {{ title }}
+      </div>
     </div>
-  </template>
-  
+
+    <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
+    <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+  </div>
+</template>
+
   
   <script>
 
@@ -45,7 +50,8 @@
               'מומחיות' : 'הדחף האנושי להשתפר עוד ועוד במשהו שחשוב לנו',
               'תכלית' : 'זוהי השאיפה לעשות את מה שאנחנו עושים במסגרת משהו גדול יותר מעצמנו'
             },
-            motivationArray: ['טיפוח מוטיבציה', 'מה מפתחים קודם?', 'הגדלת אחריות והצבת אתגרים', 'פיתוח מיומנות ותחושת המסוגלות'],
+            titles: ['יכולת גבוהה', 'יכולת נמוכה', 'מוטיבציה גבוהה', 'מוטיבציה נמוכה'],
+            motivationArray: ['טיפוח מוטיבציה', 'נפתח גם את המוטיבציה וגם את היכולת', 'הגדלת אחריות, הצבת אתגרים, האצלת סמכויות,שיתוף בהחלטות', 'פיתוח מיומנות ותחושת המסוגלות'],
             slidesInfo: {
               '1' : {
                 title: 'מוטיבציה',
@@ -65,8 +71,6 @@
           this.$emit("add-green", this.componentName);
         },
         nextTitle() {
-          this.didVisit = true;
-          this.showImage = true;
           let slideNum = Number(this.curSlide);
           slideNum++;
           this.curSlide = String(slideNum);
@@ -246,7 +250,7 @@
 
 .containerOfMotivation {
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   /* border: solid; */
@@ -266,5 +270,112 @@
   margin: 1vw;
   width: 12vw;
 }
+
+.titleColor {
+  font-size: 2rem;
+  font-family: 'Heebo-bold'
+}
+
+.place-title-0 {
+  position: absolute;
+  top: 32vh;
+  right: 37.5vw;
+  color: rgba(111, 222, 111, 0.743);
+}
+
+.place-title-1 {
+  position: absolute;
+  top: 32vh;
+  left: 37.5vw;
+  color: rgb(241, 108, 89);
+}
+
+.place-title-2 {
+  position: absolute;
+  bottom: 25vh;
+  left: 22vw;
+  color: rgba(111, 222, 111, 0.743);
+}
+
+.place-title-3 {
+  position: absolute;
+  top: 43vh;
+  left: 22vw;
+  color: rgb(241, 108, 89);
+}
+
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.appear {
+  animation: slideInFromLeft 1s ease-in-out forwards;
+}
+
+.title-slide {
+  animation: fadeIn 2s ease-in-out forwards;
+}
+
+/* Adjusting for slide-in directions */
+.place-title-0 {
+  position: absolute;
+  top: 32vh;
+  right: 37.5vw;
+  color: rgba(111, 222, 111, 0.743);
+  animation: slideInFromLeft 1s ease-in-out forwards;
+}
+
+.place-title-1 {
+  position: absolute;
+  top: 32vh;
+  left: 37.5vw;
+  color: rgb(241, 108, 89);
+  animation: slideInFromRight 1s ease-in-out forwards;
+}
+
+.place-title-2 {
+  position: absolute;
+  bottom: 25vh;
+  left: 22vw;
+  color: rgba(111, 222, 111, 0.743);
+  animation: slideInFromLeft 1s ease-in-out forwards;
+}
+
+.place-title-3 {
+  position: absolute;
+  top: 43vh;
+  left: 22vw;
+  color: rgb(241, 108, 89);
+  animation: slideInFromRight 1s ease-in-out forwards;
+}
+
   </style>
   

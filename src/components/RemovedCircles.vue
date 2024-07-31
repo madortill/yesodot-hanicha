@@ -64,10 +64,9 @@
   }
   
   .circle {
-    position: relative;
     display: flex;
     margin-left: -1.5vw;
-    top: 7vh;
+    margin-top: 5vh;
     align-content: center;
     border-radius: 100%;  /* Makes the element circular */
     width: 14vw;

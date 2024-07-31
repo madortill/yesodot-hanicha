@@ -3,8 +3,7 @@
       <div class="back-home" @click="onSwitchPage"></div>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
       <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
-      <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
-      <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+
     </div>
   </template>
   
@@ -21,12 +20,8 @@
             slidesInfo: {
               '1' : {
                 title: 'תפיסת תפקיד',
-                text: ''
+                text: 'כיצד אדם רואה את חשיבות תפקידו והשפעתו על הזולת'
               },
-              '2' : {
-                title: '',
-                text: ''
-              }
             }
           };
       },

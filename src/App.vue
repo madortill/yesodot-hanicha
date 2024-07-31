@@ -18,6 +18,7 @@ import Triangle from './components/Triangle.vue'
 import Event from './components/Event.vue'
 import Educated from './components/Educated.vue';
 import Educator from './components/Educator.vue';
+import Summery from './components/Summery.vue';
 import Navbar from './components/Navbar.vue';
 import { KeepAlive } from 'vue';
 
@@ -25,8 +26,8 @@ export default {
     name: 'app',
     data() {
         return {
-            // page: 0,
-            page: 5,
+            page: 0,
+            // page: 5,
             whereBeen: ["start-screen"],
             wherePulse: 'event',
             componentOrder: [
@@ -37,7 +38,8 @@ export default {
                 "triangle",
                 "educated",
                 "triangle",
-                "educator"
+                "educator", 
+                "summery"
             ]
         };
     },
@@ -49,6 +51,7 @@ export default {
         Event,
         Educated,
         Educator,
+        Summery
     },
     methods: {
         switchPage() {

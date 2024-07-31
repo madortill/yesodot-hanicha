@@ -308,6 +308,8 @@ import RemovedCircles from './RemovedCircles.vue';
 
  .red {
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   top: 32vh;
   font-size: 1.4rem;
   color: rgb(241, 108, 89);

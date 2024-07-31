@@ -1,154 +1,159 @@
 <template>
-    <div id="advanced">
-      <div class="back-home" @click="onSwitchPage"></div>
-      <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
-      <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
-      <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+  <div id="advanced">
+    <div class="back-home" @click="onSwitchPage"></div>
+    <div class="title">{{ slidesInfo[curSlide].title }}</div>
+    <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
+    <div class="little">במידה והניסיון חיובי, מצוין!</div>
+
+    <div v-for="(title, index) in titles" :key="title" @click="toggleContainer(index)" :class="[`title-${index}`, 'titles', { 'float': true }]">
+      {{ title }}
     </div>
-  </template>
-  
-  
-  <script>
 
+    <div v-for="(text, index) in texts" :key="text" :class="[`text-${index}`, 'texts', { 'show': activeIndexes.includes(index) }]">
+      {{ text }}
+    </div>
+  </div>
+</template>
 
-  export default {
-      name: 'advanced',
-      props: ['componentName'],
-      data() {
-          return {
-            curSlide: '1',
-            slidesInfo: {
-              '1' : {
-                title: 'ניסיון קודם בתהליך חניכה',
-                text: ''
-              },
-              '2' : {
-                title: '',
-                text: ''
-              }
-            }
-          };
-      },
-      components: {
-      },
-      methods: {
-        onSwitchPage() {
-          this.$emit("add-green", this.componentName);
-        },
-        nextTitle() {
-          this.didVisit = true;
-          this.showImage = true;
-          let slideNum = Number(this.curSlide);
-          slideNum++;
-          this.curSlide = String(slideNum);
-        },
-        lastTitle() {
-          let slideNum = Number(this.curSlide);
-          slideNum--;
-          this.curSlide = String(slideNum);
-          this.showImage = this.didVisit;
+<script>
+export default {
+  name: 'advanced',
+  props: ['componentName'],
+  data() {
+    return {
+      curSlide: '1',
+      titles: ['ניסיון חיובי', 'ניסיון שלילי'],
+      texts: ['עלינו לתאם איתו ציפיות על מנת שלא יתאכזב', 'עלינו לנהל שיחה עם הנחנך כדי להסביר לו שמטרת התהליך היא חיובית ועבורו בלבד'],
+      slidesInfo: {
+        '1': {
+          title: 'ניסיון קודם בתהליך חניכה',
+          text: 'עלינו כחונכים להבין האם הנחנך שלנו בעל ניסיון קודם בתהליך החניכה.',
         },
       },
-  };
-  </script>
-  
-  
-  <style scoped>
-    .back-home {
-      background-image: url(../assets/media/educated/go-home.png);
-      width: 6vmax;
-      height: 5.5vmax;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      position: absolute;
-      top: 5%;
-      right: 2%;
-      cursor: pointer;
-      animation: pulse 2s infinite;
-    }
+      activeIndexes: [],
+    };
+  },
+  methods: {
+    onSwitchPage() {
+      this.$emit("add-green", this.componentName);
+    },
+    toggleContainer(index) {
+      const idx = this.activeIndexes.indexOf(index);
+      if (idx > -1) {
+        this.activeIndexes.splice(idx, 1);
+      } else {
+        this.activeIndexes.push(index);
+      }
+    },
+  },
+};
+</script>
 
-    
-    .title {
-      font-size: 4rem;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 11rem;
-      font-family: 'Heebo-bold';
-      color: #0077B6;
-      width: 100vw;
-    }
-
-    
-  .text {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 20rem;
-    font-size: 2rem;
-    width: 60vw;
-  }
-
-  .button {
-  transform: translateX(-50%);
+<style scoped>
+.back-home {
+  background-image: url(../assets/media/educated/go-home.png);
+  width: 6vmax;
+  height: 5.5vmax;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 5%;
+  right: 2%;
   cursor: pointer;
-  color: #fff;
-  background-color: #0492bd;
-  border: none;
-  border-radius: 100px;
-  font-family: "Heebo";
-  width: 11rem;
+  animation: pulse 2s infinite;
+}
+
+.title {
+  font-size: 4rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 11rem;
+  font-family: 'Heebo-bold';
+  color: #0077B6;
+  width: 100vw;
+}
+
+.text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18rem;
+  font-size: 2rem;
+  width: 60vw;
+}
+
+.little {
+  top: 21rem;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
   font-size: 1.5rem;
-  padding: 1rem;
-  animation: borderPulse 4000ms infinite ease-out;
+  color: rgb(241, 108, 89);
 }
 
-.button:hover,
-.button:focus {
-  animation: borderPulse 4000ms infinite ease-out, hoverShine 200ms;
+.titles {
+  font-size: 2.2rem;
+  font-family: 'Heebo-bold';
+  color: #023E8A;
+  cursor: pointer;
+  position: absolute;
+  animation: float 4s ease-in-out infinite;
 }
 
-@keyframes borderPulse {
+.title-0 {
+  top: 45vh;
+  right: 32vw;
+}
+
+.title-1 {
+  top: 45vh;
+  left: 32vw;
+}
+
+@keyframes float {
   0% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
-  }
-  35% {
-    box-shadow: inset 0px 0px 0px 3px rgba(117, 117, 255, .2), 0px 0px 0px 10px rgba(255, 255, 255, 0);
+    transform: translateY(0);
   }
   50% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
-  }
-  75% {
-    box-shadow: inset 0px 0px 0px 3px rgba(117, 117, 255, .2), 0px 0px 0px 10px rgba(255, 255, 255, 0);
+    transform: translateY(-10px);
   }
   100% {
-    box-shadow: inset 0px 0px 0px 5px rgba(255, 255, 255, .4), 0px 0px 0px 0px rgba(255, 255, 255, 1);
+    transform: translateY(0);
   }
 }
 
-@keyframes hoverShine {
-  0% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
-  }
-  50% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 100%);
-  }
-  100% {
-    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 100%);
-  }
-}
-
-.next {
+.texts {
+  background-color: white;
+  border-radius: 25px;
+  padding: 1vw;
+  font-size: 1.5rem;
+  width: 15vw;
   position: absolute;
-  bottom: 12%;
-  left: 20%;
+  top: 52vh;
+  opacity: 0;
+  transition: all 1.5s ease;
 }
 
-.back {
-  position: absolute;
-  bottom: 12%;
-  right: 10%;
+.texts.show {
+  opacity: 1;
 }
-  </style>
-  
+
+.text-0 {
+  right: 28.5vw;
+  transform: translateX(100%);
+}
+
+.text-0.show {
+  transform: translateX(0);
+}
+
+.text-1 {
+  left: 28.5vw;
+  transform: translateX(-100%);
+}
+
+.text-1.show {
+  transform: translateX(0);
+}
+</style>
