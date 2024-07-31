@@ -2,8 +2,9 @@
     <div id="feeling-capable">
       <div class="back-home" @click="onSwitchPage"></div>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
-      <div :class="{ text: true, higher : curSlide=== '1' }" v-html="slidesInfo[curSlide].text"> </div>
+      <div :class="{ text: true, higher :true }" v-html="slidesInfo[curSlide].text"> </div>
 
+      <div v-if="curSlide === '2'" class="red">כיצד עושים את זה?</div>
       <div v-if="curSlide === '1'"> 
         <img class="low" src="../assets/media/educated/low.svg"/>
               <div class="subject2" @click="openMeOnce">נמוכה מדי</div>
@@ -55,8 +56,8 @@ import RemovedCircles from './RemovedCircles.vue';
                 text: 'אמונה של אדם לגבי יכולתו לבצע משימה שתביא לתוצאה מסוימת.<br> תחושת המסוגלות קובעת את מידת ההצלחה'
               },
               '2' : {
-                title: '',
-                text: ''
+                title: 'פיתוח תחושת מסוגלות',
+                text: 'עלינו כחונכים לספק תמונת מצב אמיתי לגבי היכולת של הנחנך ולהעלות את תחושת המסוגלות שלו'
               }
             }
           };
@@ -123,7 +124,7 @@ import RemovedCircles from './RemovedCircles.vue';
     left: 50%;
     transform: translateX(-50%);
     top: 20rem;
-    font-size: 2rem;
+    font-size: 1.6rem;
     width: 60vw;
   }
   
@@ -303,6 +304,13 @@ import RemovedCircles from './RemovedCircles.vue';
  
  .high {
   right: 23vw;
+ }
+
+ .red {
+  position: absolute;
+  top: 32vh;
+  font-size: 1.4rem;
+  color: rgb(241, 108, 89);
  }
 
   </style>

@@ -3,6 +3,28 @@
       <div class="back-home" @click="onSwitchPage"></div>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
       <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
+
+      <div v-if="curSlide === '1'">
+          <div class="wrapper">
+            <div v-for="(value, key) in typesOfOnce" :key="key" class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  {{ key }}
+                </div>
+                <div class="flip-card-back">
+                  {{ value }}
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+       <div v-else class="containerOfMotivation">
+          <div v-for="item in motivationArray" :key="item" class="white-wrap">
+          {{ item }}
+          </div>
+       </div>
+
       <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
       <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
     </div>
@@ -18,13 +40,19 @@
       data() {
           return {
             curSlide: '1',
+            typesOfOnce: {
+              'אוטונומיה' : 'התשוקה לשלוט בחיינו בעצמנו על ידי שליטה במשימות, זמן, שיטה וצוות.',
+              'מומחיות' : 'הדחף האנושי להשתפר עוד ועוד במשהו שחשוב לנו',
+              'תכלית' : 'זוהי השאיפה לעשות את מה שאנחנו עושים במסגרת משהו גדול יותר מעצמנו'
+            },
+            motivationArray: ['טיפוח מוטיבציה', 'מה מפתחים קודם?', 'הגדלת אחריות והצבת אתגרים', 'פיתוח מיומנות ותחושת המסוגלות'],
             slidesInfo: {
               '1' : {
                 title: 'מוטיבציה',
-                text: ''
+                text: 'המוטביציה מורכבת משלושה תחומים:'
               },
               '2' : {
-                title: '',
+                title: 'יכולת מול מוטיבציה',
                 text: ''
               }
             }
@@ -85,7 +113,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 20rem;
+    top: 17rem;
     font-size: 2rem;
     width: 60vw;
   }
@@ -150,6 +178,93 @@
   position: absolute;
   bottom: 12%;
   right: 10%;
+}
+
+
+.wrapper {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 60vw;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 17vw; /* Adjust width as needed */
+  height: 17vw; /* Adjust height as needed */
+  perspective: 1000px;
+  border-radius: 50%; /* Add perspective to the container */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+ 
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 5vmax;
+  padding: 2vw; /* Adjust padding as needed */
+  box-sizing: border-box; /* Ensure padding does not affect the total size */
+}
+
+.flip-card-front {
+  background-color: #8cacec;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem; /* Adjust font size as needed */
+  font-family: 'Heebo-bold';
+}
+
+.flip-card-back {
+  background-color: #8cacec;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* Adjust font size as needed */
+  transform: rotateY(180deg);
+}
+
+.containerOfMotivation {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* border: solid; */
+  display: flex;
+  flex-wrap: wrap;
+  width: 32vw;
+  height: 30vh;
+}
+
+.white-wrap{
+  text-align: center;
+  align-content: center;
+  background-color: #fff;
+  border-radius: 25px;
+  padding: 1vw;
+  font-size: 1.8rem;
+  margin: 1vw;
+  width: 12vw;
 }
   </style>
   
