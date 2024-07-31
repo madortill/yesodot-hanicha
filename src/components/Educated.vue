@@ -117,7 +117,7 @@ import ThinkingStyles from './ThinkingStyles.vue';
       console.log("Showing info"); // Debugging line
       setTimeout(() => {
         this.clicked = true;
-      }, 3500);
+      }, 5000);
       document.getElementById("clickMe").classList.add("clicked");
         const disappearingMsg = document.getElementById("disappearing");
         disappearingMsg.classList.add("show");
@@ -407,7 +407,7 @@ import ThinkingStyles from './ThinkingStyles.vue';
   animation: none !important;
 }
 .disappear {
-  animation: fadeout 5s forwards !important;
+  animation: fadeout 7s forwards !important;
 }
 @keyframes pulse {
   0% {

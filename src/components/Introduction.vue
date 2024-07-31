@@ -2,6 +2,7 @@
   <div id="introduction">
     <div class="titles">{{ slidesInfo[curSlide].title }}</div>
 
+
     <div v-if="curSlide === '1' && !didClick1" id="clickMe" @click="showInfo">
       <p>לחצו עליי</p>
     </div>
@@ -12,7 +13,30 @@
     <div v-if="didVisit && curSlide === '1'" id="grandma" class="no-animation"></div>
 
     <!-- <removed-circles></removed-circles> -->
-    
+    <div v-else-if="curSlide === '0'">
+      <div class="circle-container">
+            <div
+              v-for="(item, index) in arrayAgo"
+              :key="index"
+              class="circle"
+              :class="getCircleClass(index)"
+            >
+              {{ arrayAgo[index] }}
+            </div>
+          </div>
+          <!-- the arrows -->
+           <div>
+              <img
+              v-for="i in 5"
+              :key="i"
+              class="arrow"
+              :class="getArrowClass(i)"
+              src="../../src/assets/media/event/arrow.svg"
+            />
+           </div>
+         
+    </div> 
+
     <div v-else-if="curSlide === '2'" >
       <flip-card 
         :folder="folderName"
@@ -34,7 +58,7 @@
   </div>
 
     <button v-if="curSlide !== '3'" class="button next" @click="nextTitle">המשך</button>
-    <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
+    <button v-if="curSlide !== '0'" class="button back" @click="lastTitle">חזור</button>
     <div id="yalla-next" v-if="curSlide === '3' && didClick2" @click="nextPage"></div>
     <div class="message" v-if="curSlide === '3'"> {{ message }} </div>
   </div>
@@ -48,11 +72,12 @@ export default {
   name: "introduction",
   data() {
     return {
-      curSlide: '1',
+      curSlide: '0',
       frontName: "target-front",
       backName: "target-back",
       folderName: "introduction",
       keyWords: ['למידה', 'קשר מתמשך', 'מסייע ומנחה'],
+      arrayAgo: ["משוב", "עיבוד", "תצפית", "תדריך", "הכנה עצמית"],
       showImage: false,
       slide3Info: {
         'subtitle' : 'בחרו בתשובה הנכונה',
@@ -64,6 +89,10 @@ export default {
       didClick2: false,
       message: null,
       slidesInfo: {
+        '0': {
+          title: 'ברוכים הבאים למעגל החניכה',
+          text: ''
+        },
         '1': {
           title: 'מהי חניכה?',
           text: 'תהליך למידה שמתבסס על קשר מתמשך, בו אדם מנוסה מסייע ומנחה אדם בעל ידע מצומצם יותר.'
@@ -138,7 +167,7 @@ export default {
   showInfo() {
     setTimeout( () => {
       this.didClick1=true;
-    }, 3500);
+    }, 5000);
     document.getElementById("clickMe").classList.add("clicked");
     document.getElementById("disappearingMsg").classList.add("showMsg");
     document.getElementById("clickMe").classList.add("disappear");
@@ -169,6 +198,12 @@ export default {
       this.message = "לא נורא, נסה שוב"
     }
   },
+  getCircleClass(index) {
+      return "circle" + index;
+      },
+      getArrowClass(index) {
+        return "arrow" + index;
+      },
   
   nextPage() {
     this.$emit("switch-screen");
@@ -293,7 +328,7 @@ export default {
   animation: none !important;
 }
 .disappear {
-  animation: fadeout 5s forwards !important;
+  animation: fadeout 7s forwards !important;
 }
 
 @keyframes pulse {
@@ -448,6 +483,112 @@ export default {
   transform: translateX(-50%);
   bottom: 13vh;
   color: #023E8A;
+}
+
+
+.arrow {
+  width: 4rem;
+  position: absolute;
+}
+
+.arrow1 {
+  top: 35%;
+  right: 42%;
+  transform: rotate(150deg);
+}
+
+.arrow2 {
+  top: 35%;
+  left: 42%;
+  transform: rotate(100deg);
+}
+
+.arrow3 {
+  bottom: 31%;
+  left: 38%;
+  transform: rotate(-10deg);
+}
+
+.arrow4 {
+  bottom: 15%;
+  left: 48%;
+  transform: rotate(-60deg);
+}
+
+.arrow5 {
+  bottom: 31%;
+  right: 37%;
+  transform: rotate(240deg);
+}
+
+.circle {
+  width: 100%;
+  height: 7rem;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 550;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.6%;
+  transition: all 0.3s ease;
+  /* animation: floatAnimation 3s ease-in-out infinite; */
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+  /* background-color: #eb5781; */
+}
+
+.circle:hover {
+  box-shadow: 0 15px 9px rgba(0, 0, 0, 0.4);
+  width: 8rem;
+  height: 8rem;
+  padding: 2%;
+  /* cursor: pointer; */
+}
+
+.circle-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40vw; /* Adjust the width to fit your design */
+  height: 70%; /* Adjust the height to fit your design */
+  margin: auto; /* Center the container */
+  display: grid;
+  grid-template-columns: repeat(7, 14.3%);
+  grid-template-rows: repeat(5, 20%);
+}
+
+.circle0 {
+  grid-column-start: 6;
+  grid-row-start: 2;
+  position: relative;
+  background-color: #90E0EF;
+}
+
+.circle1 {
+  grid-column-start: 5;
+  grid-row-start: 4;
+  background-color: #48CAE4;
+}
+
+.circle2 {
+  grid-column-start: 3;
+  grid-row-start: 4;
+  background-color: #00B4D8;
+}
+
+.circle3 {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  background-color: #0096C7;
+}
+
+.circle4 {
+  grid-column-start: 4;
+  grid-row-start: 0;
+  background-color: #0077B6;
 }
 
 </style>

@@ -7,14 +7,6 @@
         <component :is="componentOrder[page]" @switch-screen="switchPage" :wherePulse="wherePulse"></component>
     </KeepAlive>
 
-      <!-- <start-screen v-show="page === 1" @switch-screen="switchPage"></start-screen>
-      <introduction v-show="page === 2" @switch-screen="switchPage"></introduction>
-      <triangle v-show="page === 3" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
-      <event v-show="page === 4" @switch-screen="switchPage"></event>
-      <triangle v-show="page === 5" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
-      <educated v-show="page === 6" @switch-screen="switchPage"></educated>
-      <triangle v-show="page === 7" @switch-screen="switchPage" :wherePulse="wherePulse"></triangle>
-      <educator  v-show="page === 8" @switch-screen="switchPage"></educator> -->
   </div>
 </template>
 
@@ -33,7 +25,8 @@ export default {
     name: 'app',
     data() {
         return {
-            page: 0,
+            // page: 0,
+            page: 5,
             whereBeen: ["start-screen"],
             wherePulse: 'event',
             componentOrder: [
