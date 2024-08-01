@@ -33,9 +33,9 @@ export default {
         }
       },
       cards: [
-        { image: 'src/assets/media/educated/hearing.png', title: 'שמיעתי' },
-        { image: 'src/assets/media/educated/touching.png', title: 'מוחשי' },
-        { image: 'src/assets/media/educated/visual.png', title: 'ויזואלי' }
+        { image: './educated/hearing.png', title: 'שמיעתי' },
+        { image: './educated/touching.png', title: 'מוחשי' },
+        { image: './educated/visual.png', title: 'ויזואלי' }
       ]
     };
   },
