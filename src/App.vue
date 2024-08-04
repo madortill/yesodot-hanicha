@@ -41,8 +41,8 @@ export default {
     name: 'app',
     data() {
         return {
-            // page: 0,
-            page: 5,
+            page: 0,
+            // page: 5,
             showAbout: false,
             clickBtn: 0,
             whereBeen: ["start-screen"],
