@@ -430,6 +430,8 @@
 
 .close {
   position: absolute;
+  width: 2vw;
+  height: 2vw;
   top: 3%;
   right: 6%;
   font-size: 3rem;
