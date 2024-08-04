@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <button v-show = "page === 0" class = "aboutBtn" @click = "openAbout">i</button>
-    <Transition>
+    <Transition v-show = "page === 0">
           <div v-show = "showAbout" class="div-about">
           <h3 class = "list-text-about">מפתחת ראשית:</h3>
             <p class = "list-text-about">טור' גילי גורדון</p>
@@ -41,8 +41,8 @@ export default {
     name: 'app',
     data() {
         return {
-            page: 0,
-            // page: 5,
+            // page: 0,
+            page: 5,
             showAbout: false,
             clickBtn: 0,
             whereBeen: ["start-screen"],

@@ -9,6 +9,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.3",
+    "gsap": "^3.12.5",
     "vue": "^3.2.45"
   },
   "devDependencies": {
