@@ -15,7 +15,9 @@
           <div class="subtitle">תראו ללב קצת אהבה ולחצו עליו</div>
 
           <div class="container" v-show="showWindow">
-              <div class="close" @click="changeMe">x</div>
+              <div class="close-container">
+                <div class="close"  @click="changeMe">x</div>
+              </div>
               <div class="title inner">סוגי ביצועים</div>
               <div class="types-subtitle">עברו עם העכבר מעל הסוגים השונים כדי ללמוד עליהם</div>
               <div class="wrapper">
@@ -428,14 +430,22 @@
   z-index: 3;
 }
 
-.close {
+.close-container {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2vw;
   height: 2vw;
-  top: 3%;
+  top: 6%;
   right: 6%;
+  cursor: pointer;
+  z-index: 2;
+}
+.close {
   font-size: 3rem;
   cursor: pointer;
+  z-index: -1;
 }
 
 .solider {
