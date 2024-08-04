@@ -159,11 +159,12 @@ export default {
   position: absolute;
   left: 0;
   top: 12vh;;
-  right: 15vw;;
+  right: 13vw;;
   bottom:0%;
   margin: auto;
   width: 5vw; /* Reduced width */
   height: 15em; /* Reduced height */
+  cursor: pointer;
 }
 
 .book .side {
