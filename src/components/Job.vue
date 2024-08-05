@@ -3,7 +3,8 @@
       <div class="back-home" @click="onSwitchPage"></div>
       <div class="title"> {{ slidesInfo[curSlide].title }}</div>
       <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
-
+      
+      <img class="gif" src="../assets/media/educated/job.gif"/>
     </div>
   </template>
   
@@ -143,6 +144,13 @@
   position: absolute;
   bottom: 12%;
   right: 10%;
+}
+
+.gif {
+  position: absolute;
+  top: 42vh;
+  left: 50%;
+  transform: translateX(-50%);
 }
   </style>
   

@@ -450,7 +450,8 @@
 
 .solider {
   width: 7vw;
-}
+} 
+
 
 .boy {
   position: absolute;
