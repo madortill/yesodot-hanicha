@@ -3,6 +3,10 @@
     <div class="title"> {{ slidesInfo[curSlide].title }}</div>
     <div :class="{ text: true }" v-html="slidesInfo[curSlide].text"> </div>
 
+    <video v-if="curSlide === '1'" width="700" height="540" controls autoplay class="video">
+      <source src="/public/educator/educator.mp4" type="video/mp4">
+    </video>
+
     <button v-if="curSlide !== '2'" class="button next" @click="nextTitle">המשך</button>
     <button v-if="curSlide !== '1'" class="button back" @click="lastTitle">חזור</button>
     <div id="yalla-next" v-if="curSlide === '2'" @click="nextPage"></div>
@@ -18,7 +22,7 @@ export default {
          slidesInfo: {
         '1' : {
           title: 'חונך',
-          text: 'סרטון'
+          text: ''
          },
         '2' : {
           title: 'אז מה התשובה הנכונה?',
@@ -151,4 +155,10 @@ export default {
   animation: pulse-smaller 1.25s infinite;
 }
 
+.video {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
