@@ -42,7 +42,7 @@ export default {
     },
     nextPage() {
       this.$emit("switch-screen");
-    }
+    },
   }
 }
 </script>
@@ -195,4 +195,5 @@ export default {
   left: 23%;
   bottom: 5%;
 }
+
 </style>

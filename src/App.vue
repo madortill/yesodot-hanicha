@@ -1,149 +1,162 @@
 <template>
   <div id="app">
-    <button v-show = "page === 0" class = "aboutBtn" @click = "openAbout">i</button>
-    <Transition v-show = "page === 0">
-          <div v-show = "showAbout" class="div-about">
-          <h3 class = "list-text-about">מפתחת ראשית:</h3>
-            <p class = "list-text-about">טור' גילי גורדון</p>
-            <h3 class = "list-text-about">גרפיקה:</h3>
-            <p class = "list-text-about">טור' גילי גורדון</p>
-            <h3 class = "list-text-about">מומחית תוכן:</h3>
-            <p class = "list-text-about">רב"ט אלה טייטלר</p>
-            <h3 class = "list-text-about">רת"ח מו"פ:</h3>
-            <p class = "list-text-about">רס"ל אביב אואנונו</p>
-            <h3 class = "list-text-about">רמ"ד טי"ל:</h3>
-            <p class = "list-text-about">רס"מ שלומי אוגרן</p>
-            <h3 class = "list-text-about">גרסה:</h3>
-            <p class = "list-text-about">אוגוסט 2024</p>
-        </div>
-      </Transition>
-     <navbar v-if="page > 0" :componentName="componentOrder[page]" @go-to-page="goToPage" :whereBeen="whereBeen"></navbar>
-      <img id="icon-bahadim" src="@/assets/media/general/mifkada-logo.png" alt="bahadim"/>
-      <img id="icon-til" src="@/assets/media/general/madortill.png" alt="till"/>
+    <button v-show="page === 0" class="aboutBtn" @click="openAbout">i</button>
+    <Transition v-show="page === 0">
+      <div v-show="showAbout" class="div-about">
+        <h3 class="list-text-about">מפתחת ראשית:</h3>
+        <p class="list-text-about">טור' גילי גורדון</p>
+        <h3 class="list-text-about">גרפיקה:</h3>
+        <p class="list-text-about">טור' גילי גורדון</p>
+        <h3 class="list-text-about">מומחית תוכן:</h3>
+        <p class="list-text-about">רב"ט אלה טייטלר</p>
+        <h3 class="list-text-about">רת"ח מו"פ:</h3>
+        <p class="list-text-about">רס"ל אביב אואנונו</p>
+        <h3 class="list-text-about">רמ"ד טי"ל:</h3>
+        <p class="list-text-about">רס"מ שלומי אוגרן</p>
+        <h3 class="list-text-about">גרסה:</h3>
+        <p class="list-text-about">אוגוסט 2024</p>
+      </div>
+    </Transition>
+    <navbar
+      v-if="page > 0"
+      :componentName="componentOrder[page]"
+      @go-to-page="goToPage"
+      :whereBeen="whereBeen"
+    ></navbar>
+    <img
+      id="icon-bahadim"
+      src="@/assets/media/general/mifkada-logo.png"
+      alt="bahadim"
+    />
+    <img id="icon-til" src="@/assets/media/general/madortill.png" alt="till" />
+    <div v-if="page === 0 || page === 8" class="toPackageBtn" @click="toPackage">חזרה למארז</div>
     <KeepAlive>
-        <component :is="componentOrder[page]" @switch-screen="switchPage" :wherePulse="wherePulse"></component>
+      <component
+        :is="componentOrder[page]"
+        @switch-screen="switchPage"
+        :wherePulse="wherePulse"
+      ></component>
     </KeepAlive>
-
   </div>
 </template>
 
-
 <script>
-import StartScreen from './components/StartScreen.vue';
-import Introduction from '@/components/Introduction.vue';
-import Triangle from './components/Triangle.vue'
-import Event from './components/Event.vue'
-import Educated from './components/Educated.vue';
-import Educator from './components/Educator.vue';
-import Summery from './components/Summery.vue';
-import Navbar from './components/Navbar.vue';
-import { KeepAlive } from 'vue';
+import StartScreen from "./components/StartScreen.vue";
+import Introduction from "@/components/Introduction.vue";
+import Triangle from "./components/Triangle.vue";
+import Event from "./components/Event.vue";
+import Educated from "./components/Educated.vue";
+import Educator from "./components/Educator.vue";
+import Summery from "./components/Summery.vue";
+import Navbar from "./components/Navbar.vue";
+import { KeepAlive } from "vue";
 
 export default {
-    name: 'app',
-    data() {
-        return {
-            page: 0,
-            // page: 5,
-            showAbout: false,
-            clickBtn: 0,
-            whereBeen: ["start-screen"],
-            wherePulse: 'event',
-            componentOrder: [
-                "start-screen",
-                "introduction",
-                "triangle",
-                "event",
-                "triangle",
-                "educated",
-                "triangle",
-                "educator", 
-                "summery"
-            ]
-        };
+  name: "app",
+  data() {
+    return {
+      page: 0,
+    //   page: 8,
+      showAbout: false,
+      clickBtn: 0,
+      whereBeen: ["start-screen"],
+      wherePulse: "event",
+      componentOrder: [
+        "start-screen",
+        "introduction",
+        "triangle",
+        "event",
+        "triangle",
+        "educated",
+        "triangle",
+        "educator",
+        "summery",
+      ],
+    };
+  },
+  components: {
+    Navbar,
+    StartScreen,
+    Introduction,
+    Triangle,
+    Event,
+    Educated,
+    Educator,
+    Summery,
+  },
+  methods: {
+    switchPage() {
+      this.page++;
+
+      if (!this.whereBeen.includes(this.componentOrder[this.page])) {
+        this.whereBeen.push(this.componentOrder[this.page]);
+      }
+      if (this.page === 4) {
+        this.wherePulse = "educated";
+      }
+      if (this.page === 6) {
+        this.wherePulse = "educator";
+      }
     },
-    components: {
-        Navbar,
-        StartScreen,
-        Introduction,
-        Triangle,
-        Event,
-        Educated,
-        Educator,
-        Summery
+    goToPage(name) {
+      this.page = this.componentOrder.indexOf(name);
     },
-    methods: {
-        switchPage() {
-            this.page++;
-            
-            if (!this.whereBeen.includes(this.componentOrder[this.page])) {
-                this.whereBeen.push(this.componentOrder[this.page]);
-            }
-            if (this.page === 4) {
-                this.wherePulse = 'educated';
-            }
-            if (this.page === 6) {
-                this.wherePulse = 'educator';
-            }
-        },
-        goToPage (name) {
-            this.page = this.componentOrder.indexOf(name);
-        },
-        openAbout() {
-            if (this.clickBtn % 2 === 0) {
-                this.showAbout = true;
-            } else {
-                this.showAbout = false
-            }
-            this.clickBtn++;
-        }
+    openAbout() {
+      if (this.clickBtn % 2 === 0) {
+        this.showAbout = true;
+      } else {
+        this.showAbout = false;
+      }
+      this.clickBtn++;
     },
+    toPackage() {
+      window.location.href = "https://madortill.github.io/MentoringPackage/";
+    }
+  },
 };
 </script>
 
-
 <style scoped>
 @font-face {
-    font-family: "Heebo-bold";
-    src: url(./assets/fonts/heebo.extrabold.ttf);
+  font-family: "Heebo-bold";
+  src: url(./assets/fonts/heebo.extrabold.ttf);
 }
 
 @font-face {
-    font-family: "Heebo";
-    src: url(./assets/fonts/heebo.regular.ttf);
+  font-family: "Heebo";
+  src: url(./assets/fonts/heebo.regular.ttf);
 }
 
 #app {
-    direction: rtl;
-    width: 100vw;
-    height: 100vh;
-    font-family: "Heebo";
-    background-color: #ebebeb;
-    overflow: hidden;
+  direction: rtl;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Heebo";
+  background-color: #ebebeb;
+  overflow: hidden;
 }
 
 #icon-bahadim {
-    max-width: 100px;
-    left: 0;
-    top: 0;
-    position: absolute;
-    margin-top: 1%;
-    margin-left: 1%;
-    z-index: 3;
+  max-width: 100px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  margin-top: 1%;
+  margin-left: 1%;
+  z-index: 3;
 }
 
 #icon-til {
-    /* min-width: 20px; */
-    max-height: 10%;
-    max-width: 90px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-bottom: 1%;
-    margin-right: 1%;
-    z-index: 3;
+  /* min-width: 20px; */
+  max-height: 10%;
+  max-width: 90px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 1%;
+  margin-right: 1%;
+  z-index: 3;
 }
-
 
 .aboutBtn {
   position: absolute;
@@ -158,10 +171,9 @@ export default {
   cursor: pointer;
   left: 2.5%;
   top: 14%;
-
 }
 
-.aboutBtn:hover{
+.aboutBtn:hover {
   background-color: #038eb9;
 }
 .div-about {
@@ -182,5 +194,28 @@ export default {
 }
 .list-text-about:hover {
   background-color: #dbdbdb;
+}
+.toPackageBtn {
+  font-family: "Heebo";
+  background-image: url(@/assets/media/general/circle.svg);
+  background-size: 100% 100%;
+  height: 8rem;
+  width: 8rem;
+  text-align: center;
+  align-content: center;
+  color: #ebebeb;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.2));
+  animation-play-state: paused;
+  font-size: calc(13px + 0.4vw);
+}
+
+.toPackageBtn:hover {
+  height: 9rem;
+  width: 9rem;
 }
 </style>
